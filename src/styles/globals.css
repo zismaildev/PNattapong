@@ -11,10 +11,10 @@
 }
 
 :root {
-  --background: #f8fafc;
+  --background: #f1f5f9;
   --foreground: #171717;
-  --surface: #ffffff;
-  --default: #e5e7eb;
+  --surface: #e2e8f0;
+  --default: #cbd5e1;
 }
 
 .dark {
@@ -38,4 +38,21 @@ body {
   transition: background-color 0.7s ease, color 0.7s ease;
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.6s ease-out forwards;
 }

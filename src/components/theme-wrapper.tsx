@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useThemeConfig } from "@/context/theme-context";
+import { KnowledgeGraph } from "./knowledge-graph";
 import { Particles } from "./particles-bg";
-import { BackgroundBeams } from "./background-beams";
 
 interface ThemeWrapperProps {
     children: React.ReactNode;
@@ -66,7 +66,7 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
             <div className="relative min-h-screen w-full flex flex-col overflow-x-hidden transition-colors duration-700 bg-background">
 
                 {/* ─── Animated Background Layer ─── */}
-                <div className="fixed inset-0 z-0 overflow-hidden">
+                <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
 
                     {/* Background Image (ถ้ามี) */}
                     {showImage && (
@@ -103,37 +103,39 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
                     {!isDark && (
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] blur-[180px] rounded-full z-[1] bg-indigo-100/50 animate-pulse" />
                     )}
-
-                    {/* Background Beams with Collision */}
-                    <BackgroundBeams
-                        className="z-[3]"
-                        isDark={isDark}
-                        beamCount={10}
-                    />
-
-                    {/* Magic UI Particles */}
-                    <Particles
-                        className="absolute inset-0 z-[4]"
-                        quantity={100}
-                        staticity={50}
-                        ease={60}
-                        size={0.45}
-                        color={particleColor}
-                        refresh={!isDark}
-                    />
-
-                    {/* Gradient Overlay */}
-                    <div
-                        className={`absolute inset-0 z-[5] pointer-events-none transition-all duration-1000 ${isDark
-                            ? "bg-gradient-to-b from-background/60 via-background/30 to-background/60"
-                            : "bg-gradient-to-b from-background/50 via-background/20 to-background/50"
-                        }`}
-                    />
                 </div>
 
+                {/* Magic UI Particles */}
+                <Particles
+                    className="fixed inset-0 z-[2] pointer-events-none"
+                    quantity={100}
+                    staticity={50}
+                    ease={60}
+                    size={0.45}
+                    color={particleColor}
+                    refresh={!isDark}
+                />
+
+                {/* Knowledge Graph interactive layer */}
+                <KnowledgeGraph
+                    className="fixed inset-0 z-[3]"
+                    isDark={isDark}
+                />
+
+                {/* Gradient Overlay */}
+                <div
+                    className={`fixed inset-0 z-[5] pointer-events-none transition-all duration-1000 ${isDark
+                        ? "bg-gradient-to-b from-background/60 via-background/30 to-background/60"
+                        : "bg-gradient-to-b from-background/50 via-background/20 to-background/50"
+                        }`}
+                />
+
                 {/* ─── Main Content ─── */}
-                <div className="relative z-20 flex-1 flex flex-col">
-                    {children}
+                <div className="relative z-20 flex-1 flex flex-col pointer-events-none">
+                    {/* The content itself should have pointer-events-auto */}
+                    <div className="pointer-events-auto flex-1 flex flex-col">
+                        {children}
+                    </div>
                 </div>
             </div>
         </>

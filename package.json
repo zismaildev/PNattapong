@@ -1,10 +1,10 @@
 {
-  "name": "nextjs-heroui-template",
+  "name": "pnattapong",
   "version": "0.1.0",
   "private": true,
-  "description": "A Next.js template using HeroUI components and Tailwind CSS for styling.",
+  "description": "This is portfolio website of PNattapong",
   "author": {
-    "name": "ZismailDev",
+    "name": "Zismaildev",
     "email": "nattapong130247@gmail.com"
   },
   "scripts": {
