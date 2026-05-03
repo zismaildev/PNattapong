@@ -1,16 +1,41 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import { siteConfig } from "@/config/site";
-import { Button, Link as HeroUILink } from "@heroui/react";
 import { ThemeSwitch } from "./theme-switch";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+
+    useEffect(() => {
+        const controlNavbar = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY < 10) {
+                setIsVisible(true);
+            } else if (currentScrollY > lastScrollY) {
+                // Scrolling down
+                setIsVisible(false);
+            } else {
+                // Scrolling up
+                setIsVisible(true);
+            }
+
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener("scroll", controlNavbar, { passive: true });
+        return () => window.removeEventListener("scroll", controlNavbar);
+    }, [lastScrollY]);
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b border-default bg-background/80 backdrop-blur-md">
+        <header
+            className={`sticky top-0 z-50 w-full border-b border-default bg-background/80 backdrop-blur-md transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+                }`}
+        >
             <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
                 {/* Brand / Logo */}
                 <div className="flex items-center gap-8">
@@ -36,9 +61,7 @@ export const Navbar = () => {
 
                 {/* Right Side Actions */}
                 <div className="flex items-center gap-4">
-                    <div className="hidden sm:flex gap-2">
-                        <ThemeSwitch />
-                    </div>
+                    <ThemeSwitch />
 
                     {/* Mobile Menu Toggle */}
                     <button
@@ -47,36 +70,9 @@ export const Navbar = () => {
                         aria-label="Toggle menu"
                     >
                         {isMenuOpen ? (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <line x1="18" y1="6" x2="6" y2="18" />
-                                <line x1="6" y1="6" x2="18" y2="18" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                         ) : (
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            >
-                                <line x1="3" y1="12" x2="21" y2="12" />
-                                <line x1="3" y1="6" x2="21" y2="6" />
-                                <line x1="3" y1="18" x2="21" y2="18" />
-                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="18" x2="21" y2="18" /></svg>
                         )}
                     </button>
                 </div>
@@ -102,3 +98,5 @@ export const Navbar = () => {
         </header>
     );
 };
+
+

@@ -75,7 +75,14 @@ const CLUSTERS = [
         color: "#94a3b8",
         children: ["Cyber Security", "Investing", "Index Fund", "Open Source", "HPC"],
     },
+    {
+        id: "c7",
+        parent: "IoT",
+        color: "#4361ee",
+        children: ["ESP32", "ESP8266", "Arduino", "DHT11", "HC-SR04", "Rain Sensor", "Relay", "LDR"],
+    },
 ];
+
 
 function randomBetween(min: number, max: number) {
     return min + Math.random() * (max - min);
@@ -88,13 +95,14 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
 
     const nodesRef = useRef<Node[]>([]);
     const edgesRef = useRef<Edge[]>([]);
-    const dragNodeRef = useRef<Node | null>(null);
     const hoverNodeRef = useRef<Node | null>(null);
-    const mousePosRef = useRef({ x: 0, y: 0 });
+    const dragNodeRef = useRef<Node | null>(null);
+    const windowMouseRef = useRef({ x: -9999, y: -9999 });
     const pulsePhaseRef = useRef(0);
     const canvasSizeRef = useRef({ w: 0, h: 0 });
     const initializedRef = useRef(false);
 
+    // ─── Initialize nodes with positions relative to (0,0) ───
     useEffect(() => {
         const nodes: Node[] = [];
         const edges: Edge[] = [];
@@ -109,8 +117,8 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
             y: props.y || 0,
             baseX: props.x || 0,
             baseY: props.y || 0,
-            dx: randomBetween(-0.4, 0.4),
-            dy: randomBetween(-0.4, 0.4),
+            dx: randomBetween(-0.3, 0.3),
+            dy: randomBetween(-0.3, 0.3),
             translateX: 0,
             translateY: 0,
             magnetism: 0.5 + Math.random() * 3,
@@ -179,16 +187,64 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
 
         nodesRef.current = nodes;
         edgesRef.current = edges;
+        initializedRef.current = false;
     }, []);
 
+    // ─── Window-level mouse tracking (bypasses z-index blocking) ───
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            const canvas = canvasRef.current;
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            windowMouseRef.current = {
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+            };
+        };
+
+        const handleMouseLeave = () => {
+            windowMouseRef.current = { x: -9999, y: -9999 };
+            dragNodeRef.current = null;
+        };
+
+        const handleMouseDown = () => {
+            if (hoverNodeRef.current) {
+                dragNodeRef.current = hoverNodeRef.current;
+            }
+        };
+
+        const handleMouseUp = () => {
+            dragNodeRef.current = null;
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mousedown", handleMouseDown);
+        window.addEventListener("mouseup", handleMouseUp);
+        document.documentElement.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mousedown", handleMouseDown);
+            window.removeEventListener("mouseup", handleMouseUp);
+            document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
+        };
+    }, []);
+
+    // ─── Canvas resize & center nodes on init ───
     useEffect(() => {
         const resizeCanvas = () => {
             const canvas = canvasRef.current;
             const container = containerRef.current;
             if (!canvas || !container) return;
 
-            const targetWidth = width || container.clientWidth;
-            const targetHeight = height || container.clientHeight;
+            // Use container dimensions, fallback to window if container reports 0
+            const containerW = container.clientWidth || container.offsetWidth;
+            const containerH = container.clientHeight || container.offsetHeight;
+            const targetWidth = width || (containerW > 0 ? containerW : window.innerWidth);
+            const targetHeight = height || (containerH > 0 ? containerH : window.innerHeight);
+
+            // Don't init with 0 dimensions
+            if (targetWidth <= 0 || targetHeight <= 0) return;
+
             canvasSizeRef.current = { w: targetWidth, h: targetHeight };
 
             const dpr = window.devicePixelRatio || 1;
@@ -200,6 +256,7 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
             const ctx = canvas.getContext("2d");
             if (ctx) ctx.scale(dpr, dpr);
 
+            // Center all nodes on first init
             if (!initializedRef.current && nodesRef.current.length > 0) {
                 initializedRef.current = true;
                 const cx = targetWidth / 2;
@@ -214,18 +271,22 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
         };
 
         window.addEventListener("resize", resizeCanvas);
+        // Run immediately, retry with RAF and setTimeout for layout timing
         resizeCanvas();
-        return () => window.removeEventListener("resize", resizeCanvas);
+        requestAnimationFrame(resizeCanvas);
+        const timer = setTimeout(resizeCanvas, 200);
+        return () => {
+            window.removeEventListener("resize", resizeCanvas);
+            clearTimeout(timer);
+        };
     }, [width, height]);
 
+    // ─── Main animation loop ───
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
-
-        const staticity = 60;
-        const ease = 40;
 
         const render = () => {
             const { w, h } = canvasSizeRef.current;
@@ -234,98 +295,93 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
 
             const nodes = nodesRef.current;
             const edges = edgesRef.current;
-            const dragNode = dragNodeRef.current;
-            const mousePos = mousePosRef.current;
+            const mouseAbs = windowMouseRef.current;
+            const mouseActive = mouseAbs.x > -9000;
 
-            // Update positions
+            // ── Update hover state from window mouse ──
+            let newHover: Node | null = null;
+            if (mouseActive) {
+                for (let i = nodes.length - 1; i >= 0; i--) {
+                    const node = nodes[i];
+                    const ddx = (node.x + node.translateX) - mouseAbs.x;
+                    const ddy = (node.y + node.translateY) - mouseAbs.y;
+                    if (ddx * ddx + ddy * ddy <= (node.radius + 8) * (node.radius + 8)) {
+                        newHover = node;
+                        break;
+                    }
+                }
+            }
+            hoverNodeRef.current = newHover;
+
+            const dragNode = dragNodeRef.current;
+
+            // ── Update node positions ──
             nodes.forEach(node => {
+                // Fade in
                 if (node.alpha < node.targetAlpha) {
                     node.alpha = Math.min(node.targetAlpha, node.alpha + 0.015);
                 }
 
-                if (node === dragNode) {
-                    // Drag: follow mouse directly
-                    node.x = mousePos.x + w / 2;
-                    node.y = mousePos.y + h / 2;
-                    node.translateX = 0;
-                    node.translateY = 0;
-                    node.baseX = node.x;
+                // ── Drag Logic ──
+                if (node === dragNode && mouseActive) {
+                    node.x = mouseAbs.x - node.translateX;
+                    node.y = mouseAbs.y - node.translateY;
+                    node.baseX = node.x; // Update base so it stays where dropped
                     node.baseY = node.y;
                     node.dx = 0;
                     node.dy = 0;
-                } else if (node.isCenter) {
-                    // Center node: flee from mouse if close
-                    const absMouseX = mousePos.x + w / 2;
-                    const absMouseY = mousePos.y + h / 2;
-                    const fleeDistX = node.x - absMouseX;
-                    const fleeDistY = node.y - absMouseY;
-                    const fleeDist = Math.sqrt(fleeDistX * fleeDistX + fleeDistY * fleeDistY);
-                    const fleeRadius = 120;
-
-                    if (fleeDist < fleeRadius && fleeDist > 0) {
-                        // Push away from mouse — stronger when closer
-                        const force = (1 - fleeDist / fleeRadius) * 0.8;
-                        node.dx += (fleeDistX / fleeDist) * force;
-                        node.dy += (fleeDistY / fleeDist) * force;
-                    }
-
-                    // Drift
+                } else {
+                    // ── Drift ──
                     node.x += node.dx;
                     node.y += node.dy;
 
-                    // Nudge direction slowly
-                    node.dx += randomBetween(-0.02, 0.02);
-                    node.dy += randomBetween(-0.02, 0.02);
+                    // Slowly nudge direction for organic movement
+                    node.dx += randomBetween(-0.015, 0.015);
+                    node.dy += randomBetween(-0.015, 0.015);
 
-                    // Clamp speed (center can move faster when fleeing)
-                    const maxSpeed = 3.5;
+                    // Clamp speed
+                    const maxSpeed = node.isCenter ? 4.0 : node.isParent ? 2.5 : 1.5;
                     node.dx = Math.max(-maxSpeed, Math.min(maxSpeed, node.dx));
                     node.dy = Math.max(-maxSpeed, Math.min(maxSpeed, node.dy));
 
-                    // Friction to slow down gradually
-                    node.dx *= 0.92;
-                    node.dy *= 0.92;
+                    // Friction
+                    node.dx *= 0.98;
+                    node.dy *= 0.98;
 
-                    // Bounce off edges
-                    const margin = 60;
+                    // ── Spring back toward base position (VERY WEAK so they float) ──
+                    const springDistX = node.x - node.baseX;
+                    const springDistY = node.y - node.baseY;
+                    const springDist = Math.sqrt(springDistX * springDistX + springDistY * springDistY);
+                    const springThreshold = node.isCenter ? 150 : 250; // Increased so they can float far
+                    if (springDist > springThreshold) {
+                        const springForce = node.isCenter ? 0.005 : 0.002; // Decreased so pull is weak
+                        node.dx -= (springDistX / springDist) * springForce * (springDist - springThreshold);
+                        node.dy -= (springDistY / springDist) * springForce * (springDist - springThreshold);
+                    }
+
+                    // ── Bounce off edges ──
+                    const margin = 40;
                     if (node.x < margin) { node.dx += 0.3; node.x = Math.max(node.x, margin); }
                     if (node.x > w - margin) { node.dx -= 0.3; node.x = Math.min(node.x, w - margin); }
                     if (node.y < margin) { node.dy += 0.3; node.y = Math.max(node.y, margin); }
                     if (node.y > h - margin) { node.dy -= 0.3; node.y = Math.min(node.y, h - margin); }
+                }
 
-                    node.translateX = 0;
-                    node.translateY = 0;
-                } else {
-                    // Regular nodes: drift freely
-                    node.x += node.dx;
-                    node.y += node.dy;
-
-                    // Slowly nudge direction
-                    node.dx += randomBetween(-0.02, 0.02);
-                    node.dy += randomBetween(-0.02, 0.02);
-
-                    // Clamp speed
-                    node.dx = Math.max(-0.45, Math.min(0.45, node.dx));
-                    node.dy = Math.max(-0.45, Math.min(0.45, node.dy));
-
-                    // Spring back only if too far from base
-                    const distX = node.x - node.baseX;
-                    const distY = node.y - node.baseY;
-                    const dist = Math.sqrt(distX * distX + distY * distY);
-                    if (dist > 75) {
-                        node.dx -= (distX / dist) * 0.04;
-                        node.dy -= (distY / dist) * 0.04;
-                    }
-
-                    // Mouse magnetism
-                    node.translateX += (mousePos.x / (staticity / node.magnetism) - node.translateX) / ease;
-                    node.translateY += (mousePos.y / (staticity / node.magnetism) - node.translateY) / ease;
+                // ── Subtle parallax (magnetism) ──
+                if (mouseActive && node !== dragNode) {
+                    const relMouseX = mouseAbs.x - w / 2;
+                    const relMouseY = mouseAbs.y - h / 2;
+                    node.translateX += (relMouseX / (60 / node.magnetism) - node.translateX) / 50;
+                    node.translateY += (relMouseY / (60 / node.magnetism) - node.translateY) / 50;
+                } else if (!mouseActive) {
+                    node.translateX *= 0.95;
+                    node.translateY *= 0.95;
                 }
             });
 
             const getPos = (n: Node) => ({ x: n.x + n.translateX, y: n.y + n.translateY });
 
-            // Draw edges
+            // ── Draw edges ──
             edges.forEach(edge => {
                 const p1 = getPos(edge.source);
                 const p2 = getPos(edge.target);
@@ -334,9 +390,9 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
                 ctx.beginPath();
                 ctx.moveTo(p1.x, p1.y);
                 ctx.lineTo(p2.x, p2.y);
-                ctx.globalAlpha = opacity;
-                ctx.strokeStyle = isDark ? edge.target.color : "rgba(15,23,42,0.4)";
-                ctx.lineWidth = 1;
+                ctx.globalAlpha = 1; // Full opacity for lines
+                ctx.strokeStyle = edge.target.color; // Raw color
+                ctx.lineWidth = 0.8;
                 ctx.stroke();
                 ctx.globalAlpha = 1;
 
@@ -346,14 +402,13 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
                     const py = p1.y + (p2.y - p1.y) * edge.particles[i];
                     ctx.beginPath();
                     ctx.arc(px, py, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = isDark ? edge.target.color : "#0f172a";
-                    ctx.globalAlpha = opacity * 1.8;
-                    ctx.fill();
+                    ctx.fillStyle = "#ffffff"; // Make particles white for pop
                     ctx.globalAlpha = 1;
+                    ctx.fill();
                 });
             });
 
-            // Draw nodes
+            // ── Draw nodes ──
             const hoveredNode = hoverNodeRef.current;
             const sorted = [...nodes].sort((a, b) => {
                 if (a === hoveredNode) return 1;
@@ -387,12 +442,12 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
                     ctx.lineWidth = 1.5;
                     ctx.stroke();
                 } else if (node.isParent) {
-                    ctx.fillStyle = isDark ? node.color : "#1e293b";
+                    ctx.fillStyle = node.color; // Full vibrant color
                     ctx.fill();
                 } else {
-                    ctx.fillStyle = isDark ? `${node.color}33` : "#f1f5f9";
+                    ctx.fillStyle = node.color; // Full vibrant color
                     ctx.fill();
-                    ctx.strokeStyle = isDark ? node.color : "#475569";
+                    ctx.strokeStyle = isDark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)";
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -404,15 +459,15 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
                     ctx.font = node.isCenter ? "bold 11px monospace" : "10px monospace";
                     ctx.textAlign = "center";
                     ctx.textBaseline = "top";
-                    ctx.fillStyle = isDark ? "#ffffff" : "#0f172a";
-                    ctx.fillText(node.label, pos.x, pos.y + r + 5);
+                    ctx.fillStyle = isDark ? "rgba(255,255,255,0.9)" : "rgba(15,23,42,1)";
+                    ctx.fillText(node.label, pos.x, pos.y + r + 8);
                 }
 
                 ctx.globalAlpha = 1;
             });
 
-            // Tooltip for child nodes
-            if (hoveredNode && !dragNode && !hoveredNode.isParent && !hoveredNode.isCenter) {
+            // ── Tooltip for child nodes on hover ──
+            if (hoveredNode && !hoveredNode.isParent && !hoveredNode.isCenter) {
                 const pos = getPos(hoveredNode);
                 const padX = 10;
                 const padY = 7;
@@ -457,72 +512,14 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
         return () => cancelAnimationFrame(requestRef.current);
     }, [isDark]);
 
-    const updateMousePos = (clientX: number, clientY: number) => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const rect = canvas.getBoundingClientRect();
-        const { w, h } = canvasSizeRef.current;
-        mousePosRef.current = {
-            x: clientX - rect.left - w / 2,
-            y: clientY - rect.top - h / 2,
-        };
-    };
-
-    const findNodeAt = (absX: number, absY: number): Node | null => {
-        for (let i = nodesRef.current.length - 1; i >= 0; i--) {
-            const node = nodesRef.current[i];
-            const dx = (node.x + node.translateX) - absX;
-            const dy = (node.y + node.translateY) - absY;
-            if (dx * dx + dy * dy <= (node.radius + 8) * (node.radius + 8)) return node;
-        }
-        return null;
-    };
-
-    const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
-        updateMousePos(e.clientX, e.clientY);
-        const { x, y } = mousePosRef.current;
-        const { w, h } = canvasSizeRef.current;
-        const node = findNodeAt(x + w / 2, y + h / 2);
-        if (node) dragNodeRef.current = node;
-    };
-
-    const handlePointerMove = (e: React.PointerEvent<HTMLCanvasElement>) => {
-        updateMousePos(e.clientX, e.clientY);
-        if (dragNodeRef.current) return;
-        const { x, y } = mousePosRef.current;
-        const { w, h } = canvasSizeRef.current;
-        const node = findNodeAt(x + w / 2, y + h / 2);
-        if (node !== hoverNodeRef.current) {
-            hoverNodeRef.current = node;
-            document.body.style.cursor = node ? "grab" : "default";
-        }
-    };
-
-    const handlePointerUp = () => {
-        dragNodeRef.current = null;
-        document.body.style.cursor = hoverNodeRef.current ? "grab" : "default";
-    };
-
-    const handlePointerLeave = () => {
-        dragNodeRef.current = null;
-        hoverNodeRef.current = null;
-        document.body.style.cursor = "default";
-        mousePosRef.current = { x: 0, y: 0 };
-    };
-
     return (
         <div
             ref={containerRef}
-            className={`absolute inset-0 z-0 w-full h-full overflow-hidden opacity-60 md:opacity-70 ${className}`}
+            className={`absolute inset-0 z-0 w-full h-full overflow-hidden pointer-events-none opacity-25 md:opacity-35 ${className}`}
         >
             <canvas
                 ref={canvasRef}
-                className="block w-full h-full touch-none"
-                onPointerDown={handlePointerDown}
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerCancel={handlePointerUp}
-                onPointerLeave={handlePointerLeave}
+                className="block w-full h-full"
             />
         </div>
     );

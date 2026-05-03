@@ -63,7 +63,8 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
                 .grid-pan { animation: grid-pan 8s linear infinite; }
             `}</style>
 
-            <div className="relative min-h-screen w-full flex flex-col overflow-x-hidden transition-colors duration-700 bg-background">
+            <div className={`relative min-h-screen w-full flex flex-col overflow-x-hidden transition-colors duration-700 ${isDark ? "bg-background" : "bg-slate-100"}`}>
+
 
                 {/* ─── Animated Background Layer ─── */}
                 <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
@@ -99,10 +100,11 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
                     <div className={`orb-3 absolute -bottom-24 -left-24 w-[460px] h-[460px] rounded-full blur-[130px] z-[2] transition-colors duration-1000 ${isDark ? "bg-rose-600/20" : "bg-pink-300/10"}`} />
                     <div className={`orb-4 absolute -bottom-20 -right-20 w-[380px] h-[380px] rounded-full blur-[100px] z-[2] transition-colors duration-1000 ${isDark ? "bg-emerald-500/15" : "bg-emerald-300/10"}`} />
 
-                    {/* Center Glow (light mode only) */}
+                    {/* Center Glow (light mode only) - Muted for better comfort */}
                     {!isDark && (
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] blur-[180px] rounded-full z-[1] bg-indigo-100/50 animate-pulse" />
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] blur-[220px] rounded-full z-[1] bg-slate-200/30 animate-pulse" />
                     )}
+
                 </div>
 
                 {/* Magic UI Particles */}
@@ -116,11 +118,7 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
                     refresh={!isDark}
                 />
 
-                {/* Knowledge Graph interactive layer */}
-                <KnowledgeGraph
-                    className="fixed inset-0 z-[3]"
-                    isDark={isDark}
-                />
+
 
                 {/* Gradient Overlay */}
                 <div

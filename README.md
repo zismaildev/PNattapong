@@ -1,89 +1,66 @@
-<div align="center">
-  <h1>⚡ Next.js + HeroUI Template</h1>
-  <p>
-    A scalable, modern, and high-performance starter template built with Next.js App Router, HeroUI (v3), and Tailwind CSS.
-  </p>
-  
-  <p>
-    <a href="https://nextjs.org/"><img alt="Next.js" src="https://img.shields.io/badge/Next.js-16.2-black?style=flat-square&logo=next.js" /></a>
-    <a href="https://react.dev/"><img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" /></a>
-    <a href="https://www.heroui.com/"><img alt="HeroUI" src="https://img.shields.io/badge/HeroUI-3.0-006FEE?style=flat-square" /></a>
-    <a href="https://tailwindcss.com/"><img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white" /></a>
-    <a href="https://www.typescriptlang.org/"><img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-Ready-3178C6?style=flat-square&logo=typescript&logoColor=white" /></a>
-  </p>
-</div>
+# 🎬 ZismailDev — Cinematic Developer Portfolio
 
-<br />
+A high-performance, SEO-optimized, and visually stunning Single-Page Application (SPA) developer portfolio built with the latest web technologies. Designed with a "Cinematic Dark" aesthetic and focused on technical excellence.
 
-> **Stop configuring and start coding.** This template provides a robust, pre-configured foundation so you can immediately begin developing your next big idea without spending hours on setup.
+![Portfolio Preview](https://github.com/ZismailDev/PNattapong/raw/main/public/og-image.png)
 
-## ✨ Features
+## ✨ Core Features
 
-- 🚀 **Next.js 16 (App Router)** - The latest React framework for the web.
-- ⚛️ **React 19** - Fast, modern React with built-in compiler support.
-- 🎨 **HeroUI v3** - Beautiful, fast, and accessible UI components.
-- 💅 **Tailwind CSS v4** - Utility-first CSS framework for rapid UI development.
-- 🌙 **Dark Mode Support** - Fully integrated with `next-themes`.
-- 📁 **Scalable Architecture** - Best practice folder structure separating UI, logic, and routing.
-- 🛠️ **Utility Helpers** - Pre-configured `clsx` and `tailwind-merge` for elegant class management (`cn` function).
+### 🧠 Interactive Knowledge Graph
+- **Force-Directed Graph:** A fully interactive, canvas-based visualization of technical skills and domains.
+- **Dynamic Physics:** Nodes react to drag and hover events with smooth, real-time physics.
+- **Categorized Clusters:** Skills are grouped into clusters (AI/RAG, Full-stack, IoT/Hardware, etc.) for better discovery.
 
----
+### 🎭 Cinematic Aesthetic
+- **High Performance:** Completely removed heavy animation libraries (Framer Motion) in favor of lightweight CSS keyframes and custom Canvas animations.
+- **Staggered Entrance:** Premium landing experience with carefully timed entrance animations.
+- **Glassmorphism UI:** Modern, translucent interface built with HeroUI v3 and Tailwind CSS.
+- **Dynamic Background:** Ambient particles and floating orbs that adapt to light/dark themes.
+
+### 🚀 Technical Excellence (SEO & AEO)
+- **SPA Architecture:** Seamless hash-based navigation for zero-latency page transitions.
+- **AI Search Ready:** Optimized for AI-driven search engines (AEO) with structured JSON-LD (Person schema).
+- **Full SEO Suite:** Automated sitemaps, robots.txt, and comprehensive OpenGraph/Twitter metadata.
+- **Light/Dark Synchronized:** Consistent visual quality across both theme modes with a muted, professional light theme.
+
+## 🛠️ Tech Stack
+
+- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **UI Components:** [HeroUI v3](https://heroui.com/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons:** [Iconify](https://iconify.design/)
+- **Interactions:** Custom Force-directed Canvas API
+- **SEO:** Metadata API + JSON-LD
 
 ## 📂 Project Structure
 
-This project adopts a highly scalable structure. The `app` directory is kept clean and strictly for routing, while other concerns are clearly separated:
-
 ```text
 src/
-├── app/         # 🛣️ Next.js App Router (Pages, Layouts, API routes)
-├── components/  # 🧩 Reusable UI Components
-├── config/      # ⚙️ Application configuration (e.g., site settings, navigation)
-├── context/     # 🌐 Global React Context Providers (e.g., ThemeProvider)
-├── hooks/       # 🪝 Custom React Hooks
-├── lib/         # 🛠️ Utility functions and helpers (e.g., utils.ts)
-├── styles/      # 🎨 Global styles and Tailwind CSS configurations
-└── types/       # 🏷️ TypeScript types and interfaces
+├── app/                  # Next.js App Router (SPA Entry)
+├── components/           
+│   ├── portfolio/        # Section-based modular components
+│   ├── theme-wrapper.tsx # Global layout and background effects
+│   └── knowledge-graph   # Interactive Canvas engine
+├── config/               # Centralized site configuration
+└── styles/               # Global CSS and theme tokens
 ```
 
----
-
-## 🚀 Getting Started
-
-### 1. Clone & Install
-
-Use this template by clicking the **"Use this template"** button on GitHub, or clone it directly.
+## ⚡ Quick Start
 
 ```bash
+# Clone the repository
+git clone https://github.com/ZismailDev/PNattapong.git
+
 # Install dependencies
-pnpm install
-# or npm install / yarn install
+npm install
+
+# Run development server
+npm run dev
 ```
 
-### 2. Run the Development Server
+## 📝 License
 
-```bash
-pnpm dev
-# or npm run dev / yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-
-## 🛠️ Included Utilities
-
-### The `cn` Function
-Located in `src/lib/utils.ts`, this utility elegantly merges Tailwind CSS classes and resolves conflicts using `clsx` and `tailwind-merge`.
-
-```typescript
-import { cn } from "@/lib/utils";
-
-// Example usage
-<div className={cn("px-2 py-1 bg-blue-500", isError && "bg-red-500")} />
-```
-
----
-
-## 📜 License
-
-This project is open-source and available under the [MIT License](LICENSE).
+Built with 💜 by [Nattapong Panthiya](https://github.com/ZismailDev)

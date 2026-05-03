@@ -6,6 +6,7 @@ import {
 } from "@heroui/react";
 
 import { siteConfig } from "@/config/site";
+import { Icon } from "@iconify/react";
 
 interface FooterCompProps {
     appVersion?: {
@@ -89,20 +90,27 @@ export default function FooterComp({
                                     href={siteConfig.links.facebook}
                                     rel="noreferrer"
                                     target="_blank"
-                                    title="Facebook CMRU Computer Department"
+                                    title="Facebook"
                                 >
-                                    <svg
-                                        aria-hidden="true"
-                                        className="size-4"
-                                        fill="currentColor"
-                                        viewBox="0 0 8 19"
-                                    >
-                                        <path
-                                            clipRule="evenodd"
-                                            d="M6.135 3H8V0H6.135a4.147 4.147 0 0 0-4.142 4.142V6H0v3h2v9.938h3V9h2.021l.592-3H5V3.591A.6.6 0 0 1 5.592 3h.543Z"
-                                            fillRule="evenodd"
-                                        />
-                                    </svg>
+                                    <Icon icon="mdi:facebook" className="text-xl" />
+                                </a>
+                                <a
+                                    className="text-default-400 hover:text-primary transition-colors duration-200"
+                                    href={siteConfig.links.github}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    title="GitHub"
+                                >
+                                    <Icon icon="mdi:github" className="text-xl" />
+                                </a>
+                                <a
+                                    className="text-default-400 hover:text-primary transition-colors duration-200"
+                                    href={siteConfig.links.linkedin}
+                                    rel="noreferrer"
+                                    target="_blank"
+                                    title="LinkedIn"
+                                >
+                                    <Icon icon="mdi:linkedin" className="text-xl" />
                                 </a>
                             </div>
 

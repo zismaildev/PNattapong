@@ -10,25 +10,46 @@ export const siteConfig = {
     navItems: [
         {
             title: "About",
-            href: "/about",
+            href: "/#about",
+            icon: "mdi:account-outline"
+        },
+        {
+            title: "Knowledge",
+            href: "/#knowledge",
+            icon: "mdi:brain"
         },
         {
             title: "Projects",
-            href: "/projects",
+            href: "/#projects",
+            icon: "mdi:folder-outline"
+        },
+        {
+            title: "Activity",
+            href: "/#activity",
+            icon: "mdi:timeline-text-outline"
         },
         {
             title: "Contact",
-            href: "/contact",
+            href: "/#contact",
+            icon: "mdi:email-outline"
         },
     ],
     navMenuItems: [
         {
             title: "About",
-            href: "/about",
+            href: "/#about",
+        },
+        {
+            title: "Knowledge",
+            href: "/#knowledge",
         },
         {
             title: "Projects",
-            href: "/projects",
+            href: "/#projects",
+        },
+        {
+            title: "Activity",
+            href: "/activity",
         },
         {
             title: "Contact",
@@ -39,7 +60,7 @@ export const siteConfig = {
         facebook: "#",
         instagram: "#",
         github: "https://github.com/ZismailDev",
-        linkedin: "#",
+        linkedin: "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
         email: "nattapong130247@gmail.com",
     },
 }
