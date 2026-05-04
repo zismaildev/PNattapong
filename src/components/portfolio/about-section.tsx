@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
+import Image from "next/image";
 
 function useInView(options = { threshold: 0.1, triggerOnce: true }) {
     const ref = useRef<HTMLElement | HTMLDivElement>(null);
@@ -132,8 +133,8 @@ export const AboutSection = () => {
 
                             <div className="relative p-[1px] rounded-[40px] overflow-hidden bg-gradient-to-br from-indigo-500/30 to-violet-500/30 shadow-2xl">
                                 <div className={`relative w-full rounded-[39px] p-10 flex flex-col items-center text-center backdrop-blur-3xl ${isDark ? "bg-[#0a0a0f]/90" : "bg-white/90"}`}>
-                                    <div className="w-32 h-32 rounded-full mb-6 flex items-center justify-center bg-gradient-to-br from-indigo-900 to-violet-900 border border-white/10">
-                                        <span className="text-5xl font-black text-white tracking-tighter">NP</span>
+                                    <div className="w-32 h-32 rounded-full mb-6 flex items-center justify-center border border-white/10 overflow-hidden relative bg-slate-800">
+                                        <Image src="/profile.jpg" alt="Nattapong Panthiya" fill sizes="128px" className="object-cover" />
                                     </div>
                                     <h3 className={`text-3xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>Nattapong Panthiya</h3>
                                     <p className={`text-sm mt-1.5 font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>Full-stack Developer & AI Engineer</p>

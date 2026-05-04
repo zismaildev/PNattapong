@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 import { HeroSection } from "@/components/portfolio/hero-section";
 import { AboutSection } from "@/components/portfolio/about-section";
 import { KnowledgeSection } from "@/components/portfolio/knowledge-section";
@@ -6,10 +7,10 @@ import { SkillsSection } from "@/components/portfolio/skills-section";
 import { ProjectsSection } from "@/components/portfolio/projects-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
 
-const siteUrl = "https://aureliax.dev";
+const siteUrl = siteConfig.url;
 
 export const metadata: Metadata = {
-  title: "Nattapong Panthiya (Zismail) — Full-Stack Developer & CS Student",
+  title: `${siteConfig.name}`,
   description:
     "Portfolio ของณัฐพงษ์ ปันธิยะ — Full-Stack Developer & SysAdmin เชี่ยวชาญ Next.js, TypeScript, Relational DB Design, Role-based Systems และ Digital Document Processing พร้อมรับงานฝึกงาน/งานจริง 2026",
   alternates: {

@@ -1,7 +1,9 @@
 import { MetadataRoute } from 'next';
 
+import { siteConfig } from '@/config/site';
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const siteUrl = "https://aureliax.dev";
+  const siteUrl = siteConfig.url;
 
   return [
     {
