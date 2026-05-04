@@ -15,9 +15,9 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     // ตั้งค่าเริ่มต้นให้แสดงภาพพื้นหลังคอนเสิร์ต (Login style) ตลอดทั้งเว็บไซต์
-    const [showImage, setShowImage] = useState(true);
-    const [backgroundImage, setBackgroundImage] = useState("/images/login-bg.png");
-    const [backgroundImageLight, setBackgroundImageLight] = useState("/images/login-bg-light.png");
+    const [showImage, setShowImage] = useState(false);
+    const [backgroundImage, setBackgroundImage] = useState("");
+    const [backgroundImageLight, setBackgroundImageLight] = useState("");
 
     const value = useMemo(() => ({
         showImage,
