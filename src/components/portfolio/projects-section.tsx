@@ -1,123 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
+
 import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
-function useInView(options = { threshold: 0.1, triggerOnce: true }) {
-    const ref = useRef<HTMLElement | HTMLDivElement>(null);
-    const [isInView, setIsInView] = useState(false);
+import { useInView } from "@/hooks/use-in-view";
+import { useIsDark } from "@/hooks/use-is-dark";
 
-    useEffect(() => {
-        const currentRef = ref.current;
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setIsInView(true);
-                if (options.triggerOnce && currentRef) {
-                    observer.unobserve(currentRef);
-                }
-            } else if (!options.triggerOnce) {
-                setIsInView(false);
-            }
-        }, options);
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, [options.threshold, options.triggerOnce]);
-
-    return { ref, isInView };
-}
-
-const projects = [
-    {
-        title: "AI Village Chatbot",
-        description: "ระบบโต้ตอบอัตโนมัติบนเทคโนโลยี Generative AI และ RAG เพื่อยกระดับการให้บริการข้อมูลหมู่บ้าน ผ่าน Telegram พร้อมระบบ PDPA Shield และ Hybrid RAG Pipeline.",
-        icon: "mdi:robot-outline",
-        color: "from-blue-500/20 to-indigo-500/20",
-        iconColor: "text-blue-400",
-        techStack: ["Next.js 16", "LangChain.js", "Groq/Gemini", "PostgreSQL"],
-        links: {
-            preview: "https://aichatmoban.cmru.ac.th",
-            github: ""
-        },
-        featured: true,
-    },
-    {
-        title: "Thaitan Ticket System",
-        description: "ระบบจองบัตรคอนเสิร์ตยุคใหม่ พร้อม E-Ticket ครบวงจร, Dynamic Ticket Editor (Drag & Drop), และระบบล็อคบัตรอัตโนมัติ (Soft Hold).",
-        icon: "mdi:ticket-confirmation-outline",
-        color: "from-amber-500/20 to-orange-500/20",
-        iconColor: "text-amber-400",
-        techStack: ["Next.js 16", "HeroUI v3", "Prisma", "Supabase"],
-        links: {
-            preview: "https://thaitan-ticket-silk.vercel.app/",
-            github: ""
-        },
-        featured: true,
-    },
-    {
-        title: "AureliaX",
-        description: "แพลตฟอร์มบริหารจัดการแบบ All-in-One รวมระบบ Kanban, Financial Tracking, และ Audit Logs พร้อม Landing Pages ระดับพรีเมียม.",
-        icon: "mdi:view-dashboard-outline",
-        color: "from-violet-500/20 to-fuchsia-500/20",
-        iconColor: "text-violet-400",
-        techStack: ["Next.js 15.3", "Supabase", "Tailwind 4", "Framer Motion"],
-        links: {
-            preview: "https://aureliax.vercel.app/",
-            github: ""
-        },
-        featured: false,
-    },
-    {
-        title: "S.P. AUTO PART",
-        description: "ระบบจัดการอะไหล่รถยนต์แบบละเอียด กรองตามยี่ห้อ/รุ่น, Specifications แบบ Dynamic, และระบบ Activity Logs ติดตามการทำงานของแอดมิน.",
-        icon: "mdi:car-cog",
-        color: "from-orange-500/20 to-red-500/20",
-        iconColor: "text-orange-400",
-        techStack: ["Next.js 15", "Supabase", "HeroUI", "TypeScript"],
-        links: {
-            preview: "https://spautopart.vercel.app/",
-            github: ""
-        },
-        featured: false,
-    },
-    {
-        title: "Thai Concert in Germany",
-        description: "Cinematic Portfolio สำหรับผู้จัดคอนเสิร์ตไทยในยุโรป (TCG) พร้อมระบบ Timeline งานอีเวนต์, Gallery กรองตามปี, และรองรับ 3 ภาษา (TH/EN/DE).",
-        icon: "mdi:music-circle-outline",
-        color: "from-emerald-500/20 to-teal-500/20",
-        iconColor: "text-emerald-400",
-        techStack: ["Next.js", "Glassmorphism", "i18n", "GSAP/Framer"],
-        links: {
-            preview: "https://tcg-portfolio-lovat.vercel.app/",
-        },
-        featured: false,
-    }
-];
+import Link from "next/link";
+import { projectsData } from "@/data/projects";
 
 export const ProjectsSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const { resolvedTheme } = useTheme();
+    const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isDark = mounted ? resolvedTheme === "dark" : true;
 
     return (
         <section
             id="projects"
-            ref={sectionRef as React.RefObject<HTMLSelectElement>}
+            ref={sectionRef as React.RefObject<HTMLElement>}
             className="relative w-full py-32 overflow-hidden flex flex-col items-center justify-center min-h-[80vh]"
         >
             <div className="absolute inset-0 z-0 pointer-events-none">
@@ -140,7 +41,7 @@ export const ProjectsSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    {projects.map((project, index) => (
+                    {projectsData.map((project, index) => (
                         <div
                             key={index}
                             className={`group relative flex flex-col p-8 md:p-10 rounded-[32px] border transition-all duration-500 overflow-hidden ${isInView ? "animate-in fade-in slide-in-from-bottom-12 duration-700 fill-mode-both" : "opacity-0"} ${isDark ? "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] hover:border-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]" : "bg-white/80 border-slate-200 hover:shadow-xl backdrop-blur-md"}`}
@@ -169,9 +70,9 @@ export const ProjectsSection = () => {
 
                                 <div className="mb-8 flex-grow">
                                     <div className="flex items-center gap-3 mb-3">
-                                        <h3 className={`text-2xl font-black tracking-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                        <Link href={`/projects/${project.id}`} className={`text-2xl font-black tracking-tight hover:underline transition-all ${isDark ? "text-slate-100" : "text-slate-900"}`}>
                                             {project.title}
-                                        </h3>
+                                        </Link>
                                         {project.featured && (
                                             <Chip size="sm" variant="soft" className={`h-5 px-1.5 text-[9px] font-black tracking-widest uppercase ${isDark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-700"}`}>
                                                 Featured
@@ -179,11 +80,11 @@ export const ProjectsSection = () => {
                                         )}
                                     </div>
                                     <p className={`text-sm leading-relaxed font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                        {project.description}
+                                        {project.shortDescription}
                                     </p>
                                 </div>
 
-                                <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5">
+                                <div className="flex flex-wrap gap-2 mt-auto pt-6 border-t border-white/5 mb-6">
                                     {project.techStack.map(tech => (
                                         <span
                                             key={tech}
@@ -193,6 +94,12 @@ export const ProjectsSection = () => {
                                         </span>
                                     ))}
                                 </div>
+                                <Link 
+                                    href={`/projects/${project.id}`}
+                                    className={`flex items-center gap-2 text-sm font-bold mt-2 w-fit transition-colors ${isDark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}
+                                >
+                                    View Case Study <Icon icon="mdi:arrow-right" />
+                                </Link>
                             </div>
                         </div>
                     ))}

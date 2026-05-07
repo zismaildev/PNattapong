@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useIsDark } from "@/hooks/use-is-dark";
 import { Card, Chip } from "@heroui/react";
 import NextLink from "next/link";
 import { Icon } from "@iconify/react";
@@ -17,14 +16,7 @@ const STATS = [
 const PROJECT_STACK = ["Next.js", "LangChain", "pgvector", "Groq"] as const;
 
 export const HeroSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const { resolvedTheme } = useTheme();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isDark = mounted ? resolvedTheme === "dark" : true;
+    const { isDark } = useIsDark();
 
     return (
         <section

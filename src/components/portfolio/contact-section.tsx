@@ -1,54 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
+
 import { Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { siteConfig } from "@/config/site";
 
 
 
-function useInView(options = { threshold: 0.1, triggerOnce: true }) {
-    const ref = useRef<HTMLElement | HTMLDivElement>(null);
-    const [isInView, setIsInView] = useState(false);
-
-    useEffect(() => {
-        const currentRef = ref.current;
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setIsInView(true);
-                if (options.triggerOnce && currentRef) {
-                    observer.unobserve(currentRef);
-                }
-            } else if (!options.triggerOnce) {
-                setIsInView(false);
-            }
-        }, options);
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, [options.threshold, options.triggerOnce]);
-
-    return { ref, isInView };
-}
+import { useInView } from "@/hooks/use-in-view";
+import { useIsDark } from "@/hooks/use-is-dark";
 
 export const ContactSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const { resolvedTheme } = useTheme();
+    const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isDark = mounted ? resolvedTheme === "dark" : true;
 
     const socialLinks = [
         { icon: "mdi:github", href: siteConfig.links.github },
@@ -60,7 +25,7 @@ export const ContactSection = () => {
     return (
         <section
             id="contact"
-            ref={sectionRef as React.RefObject<HTMLSelectElement>}
+            ref={sectionRef as React.RefObject<HTMLElement>}
             className="relative w-full py-32 overflow-hidden flex flex-col items-center justify-center min-h-[80vh]"
         >
             {/* Background Layers */}
@@ -115,6 +80,7 @@ export const ContactSection = () => {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                aria-label={`Visit my ${social.icon.split(":")[1]}`}
                                 className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300 hover:-translate-y-1 ${isDark ? "bg-white/[0.03] border-white/[0.08] text-slate-400 hover:border-indigo-500/50 hover:text-white" : "bg-white border-slate-200 text-slate-500 hover:border-indigo-500 hover:text-indigo-600 shadow-sm"}`}
                             >
                                 <Icon icon={social.icon} className="text-xl" />
@@ -127,48 +93,24 @@ export const ContactSection = () => {
                 {/* Right side: Form */}
                 <div className={`relative ${isInView ? "animate-in fade-in slide-in-from-right-8 duration-700 fill-mode-both" : "opacity-0"}`}>
                     <div className={`p-8 md:p-12 rounded-[40px] border backdrop-blur-md ${isDark ? "bg-white/[0.02] border-white/[0.06]" : "bg-white/80 border-slate-200 shadow-2xl"}`}>
-                        <form className="space-y-6">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest pl-1">Name</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Your Name"
-                                        className={`w-full px-5 h-14 rounded-2xl border outline-none transition-all duration-300 ${isDark ? "bg-white/[0.03] border-white/10 text-white focus:border-indigo-500/50 focus:bg-white/[0.05]" : "bg-slate-50 border-slate-200 text-slate-900 focus:border-indigo-500 focus:bg-white"}`}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest pl-1">Email</label>
-                                    <input
-                                        type="email"
-                                        placeholder="hello@example.com"
-                                        className={`w-full px-5 h-14 rounded-2xl border outline-none transition-all duration-300 ${isDark ? "bg-white/[0.03] border-white/10 text-white focus:border-indigo-500/50 focus:bg-white/[0.05]" : "bg-slate-50 border-slate-200 text-slate-900 focus:border-indigo-500 focus:bg-white"}`}
-                                    />
-                                </div>
-                            </div>
+                        <div className="space-y-6">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest pl-1">Subject</label>
-                                <input
-                                    type="text"
-                                    placeholder="How can I help you?"
-                                    className={`w-full px-5 h-14 rounded-2xl border outline-none transition-all duration-300 ${isDark ? "bg-white/[0.03] border-white/10 text-white focus:border-indigo-500/50 focus:bg-white/[0.05]" : "bg-slate-50 border-slate-200 text-slate-900 focus:border-indigo-500 focus:bg-white"}`}
-                                />
+                                <h3 className={`text-2xl font-black tracking-tight ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                    Ready to Connect?
+                                </h3>
+                                <p className={`text-sm font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
+                                    Send me an email directly or find me on my social channels. I usually respond within 24 hours.
+                                </p>
                             </div>
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-mono text-slate-500 uppercase tracking-widest pl-1">Message</label>
-                                <textarea
-                                    placeholder="Write your message here..."
-                                    rows={4}
-                                    className={`w-full p-5 rounded-2xl border outline-none transition-all duration-300 resize-none ${isDark ? "bg-white/[0.03] border-white/10 text-white focus:border-indigo-500/50 focus:bg-white/[0.05]" : "bg-slate-50 border-slate-200 text-slate-900 focus:border-indigo-500 focus:bg-white"}`}
-                                />
-                            </div>
-                            <Button
-                                className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold tracking-widest uppercase transition-all duration-300"
+                            
+                            <a
+                                href={`mailto:${siteConfig.links.email}`}
+                                className="w-full h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold tracking-widest uppercase transition-all duration-300 flex items-center justify-center"
                             >
-                                SEND MESSAGE
+                                OPEN MAIL CLIENT
                                 <Icon icon="mdi:send-variant" className="ml-2" />
-                            </Button>
-                        </form>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

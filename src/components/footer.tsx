@@ -37,17 +37,14 @@ export default function FooterComp({
     const state = useOverlayState();
 
     const appVersion = providedAppVersion || {
-        project: "0.8.1",
+        project: "0.1.0",
         client: {
-            version: "0.8.1",
-            nextjs: "15.1.0",
-            heroui: "1.0.0",
-            tailwind: "4.1.11",
+            version: "0.1.0",
+            nextjs: "16.2.4",
+            heroui: "3.0.3",
+            tailwind: "4.x",
         },
         library: {
-            api: "1.0.0",
-            "next-core": "1.0.0",
-            database: "Prisma+Supabase",
             utils: "1.0.0",
         },
         date: { short: "-", full: "-" },
@@ -161,17 +158,6 @@ export default function FooterComp({
                                             <ul className="py-2">
                                                 <li className="font-bold">Library</li>
                                                 <ul className="mx-6 list-disc text-sm">
-                                                    <li>
-                                                        API <small>{appVersion.library.api}</small>
-                                                    </li>
-                                                    <li>
-                                                        Next-Core{" "}
-                                                        <small>{appVersion.library["next-core"]}</small>
-                                                    </li>
-                                                    <li>
-                                                        Database{" "}
-                                                        <small>{appVersion.library.database}</small>
-                                                    </li>
                                                     <li>
                                                         Utils <small>{appVersion.library.utils}</small>
                                                     </li>

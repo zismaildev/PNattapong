@@ -1,52 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
+
 import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 
-function useInView(options = { threshold: 0.1, triggerOnce: true }) {
-    const ref = useRef<HTMLElement | HTMLDivElement>(null);
-    const [isInView, setIsInView] = useState(false);
-
-    useEffect(() => {
-        const currentRef = ref.current;
-        const observer = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) {
-                setIsInView(true);
-                if (options.triggerOnce && currentRef) {
-                    observer.unobserve(currentRef);
-                }
-            } else if (!options.triggerOnce) {
-                setIsInView(false);
-            }
-        }, options);
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, [options.threshold, options.triggerOnce]);
-
-    return { ref, isInView };
-}
+import { useInView } from "@/hooks/use-in-view";
+import { useIsDark } from "@/hooks/use-is-dark";
 
 export const AboutSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const { resolvedTheme } = useTheme();
+    const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
 
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
-    const isDark = mounted ? resolvedTheme === "dark" : true;
 
     const education = [
         {
@@ -59,24 +26,6 @@ export const AboutSection = () => {
             year: "2021 - 2022",
             institution: "Non-Formal Education (NFE) San Sai",
             degree: "Senior High School (Grade 10-12)",
-            icon: "mdi:school-outline"
-        },
-        {
-            year: "2016 - 2020",
-            institution: "Wat Mae Rim Wittaya School",
-            degree: "Junior High School (Grade 7-9)",
-            icon: "mdi:school-outline"
-        },
-        {
-            year: "2014 - 2015",
-            institution: "Wat Mae Kaet Noi School",
-            degree: "Elementary School (Grade 5-6)",
-            icon: "mdi:school-outline"
-        },
-        {
-            year: "2010 - 2013",
-            institution: "Theerawat Bumpen School",
-            degree: "Elementary School (Grade 1-4)",
             icon: "mdi:school-outline"
         }
     ];
@@ -104,7 +53,7 @@ export const AboutSection = () => {
         <div className="flex flex-col">
             <section
                 id="about"
-                ref={sectionRef as React.RefObject<HTMLSelectElement>}
+                ref={sectionRef as React.RefObject<HTMLElement>}
                 className="relative w-full py-32 overflow-hidden flex items-center justify-center"
             >
                 {/* ─── Background Layers ─── */}

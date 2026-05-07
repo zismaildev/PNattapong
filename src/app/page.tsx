@@ -5,6 +5,7 @@ import { AboutSection } from "@/components/portfolio/about-section";
 import { KnowledgeSection } from "@/components/portfolio/knowledge-section";
 import { SkillsSection } from "@/components/portfolio/skills-section";
 import { ProjectsSection } from "@/components/portfolio/projects-section";
+import { AchievementsSection } from "@/components/portfolio/achievements-section";
 import { ContactSection } from "@/components/portfolio/contact-section";
 
 const siteUrl = siteConfig.url;
@@ -108,6 +109,8 @@ export default function Home() {
         <SkillsSection />
         <div className="section-divider" />
         <ProjectsSection />
+        <div className="section-divider" />
+        <AchievementsSection />
         <div className="section-divider" />
         <ContactSection />
       </main>

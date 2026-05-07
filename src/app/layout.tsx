@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "@/styles/globals.css";
 import { siteConfig } from "@/config/site";
 import { Navbar } from "@/components/navbar";
@@ -32,6 +33,33 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Nattapong Panthiya",
+  "alternateName": ["ณัฐพงษ์ ปันธิยะ", "ZismailDev"],
+  "url": "https://pnattapong.vercel.app",
+  "jobTitle": "Full-Stack Developer",
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "Chiang Mai Rajabhat University"
+  },
+  "knowsAbout": [
+    "Next.js",
+    "TypeScript",
+    "AI/RAG",
+    "Go (Golang)",
+    "Docker",
+    "Proxmox",
+    "System Architecture"
+  ],
+  "sameAs": [
+    "https://github.com/ZismailDev",
+    "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
+    "https://fastwork.co/user/zismail"
+  ]
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,6 +72,25 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="bg-background text-foreground h-full overflow-x-hidden" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
+        {/* Google Analytics 4 */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.googleAnalyticsId}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${siteConfig.googleAnalyticsId}');
+          `}
+        </Script>
+
         <NextThemesProvider attribute="class" defaultTheme="dark">
           <ThemeConfigProvider>
             <ThemeWrapper>

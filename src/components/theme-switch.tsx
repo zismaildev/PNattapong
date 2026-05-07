@@ -1,20 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { useIsDark } from "@/hooks/use-is-dark";
 import { Icon } from "@iconify/react";
 
 export const ThemeSwitch = () => {
-    const [mounted, setMounted] = useState(false);
-    const { theme, setTheme } = useTheme();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
+    const { mounted, isDark, setTheme } = useIsDark();
 
     if (!mounted) return <div className="w-10 h-10 rounded-full bg-slate-200/20" />;
-
-    const isDark = theme === "dark";
 
     return (
         <button

@@ -1,18 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
 import { KnowledgeGraph } from "@/components/knowledge-graph";
+import { useIsDark } from "@/hooks/use-is-dark";
 
 export const KnowledgeSection = () => {
-    const [mounted, setMounted] = useState(false);
-    const { resolvedTheme } = useTheme();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const isDark = mounted ? resolvedTheme === "dark" : true;
+    const { isDark } = useIsDark();
 
     return (
         <section id="knowledge" className={`relative w-full py-20 overflow-hidden ${!isDark ? "bg-slate-100/90" : ""}`}>
@@ -32,9 +24,11 @@ export const KnowledgeSection = () => {
             </div>
 
             {/* The Graph Area */}
-            <div className="relative w-full h-[600px] md:h-[700px]">
-
-
+            <div 
+                className="relative w-full h-[600px] md:h-[700px]"
+                role="img"
+                aria-label="Interactive Knowledge Graph displaying skills and their relationships"
+            >
                 <KnowledgeGraph isDark={isDark} />
 
                 {/* Visual Decorative Overlays */}

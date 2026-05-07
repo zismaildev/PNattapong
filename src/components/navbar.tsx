@@ -11,6 +11,8 @@ export const Navbar = () => {
     const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
+        let ticking = false;
+
         const controlNavbar = () => {
             const currentScrollY = window.scrollY;
 
@@ -25,10 +27,18 @@ export const Navbar = () => {
             }
 
             setLastScrollY(currentScrollY);
+            ticking = false;
         };
 
-        window.addEventListener("scroll", controlNavbar, { passive: true });
-        return () => window.removeEventListener("scroll", controlNavbar);
+        const onScroll = () => {
+            if (!ticking) {
+                window.requestAnimationFrame(controlNavbar);
+                ticking = true;
+            }
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
     }, [lastScrollY]);
 
     return (

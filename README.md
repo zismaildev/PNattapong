@@ -25,7 +25,7 @@ A high-performance, SEO-optimized, and visually stunning Single-Page Application
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 15](https://nextjs.org/) (App Router)
+- **Framework:** [Next.js 16.2.4](https://nextjs.org/) (App Router)
 - **UI Components:** [HeroUI v3](https://heroui.com/)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Icons:** [Iconify](https://iconify.design/)
@@ -42,6 +42,8 @@ src/
 │   ├── theme-wrapper.tsx # Global layout and background effects
 │   └── knowledge-graph   # Interactive Canvas engine
 ├── config/               # Centralized site configuration
+├── context/              # Global state providers
+├── hooks/                # Custom React Hooks
 └── styles/               # Global CSS and theme tokens
 ```
 

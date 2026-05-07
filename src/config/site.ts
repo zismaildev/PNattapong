@@ -24,9 +24,9 @@ export const siteConfig = {
             icon: "mdi:folder-outline"
         },
         {
-            title: "Activity",
-            href: "/#activity",
-            icon: "mdi:timeline-text-outline"
+            title: "Achievements",
+            href: "/#achievements",
+            icon: "mdi:trophy-outline"
         },
         {
             title: "Contact",
@@ -48,19 +48,20 @@ export const siteConfig = {
             href: "/#projects",
         },
         {
-            title: "Activity",
-            href: "/activity",
+            title: "Achievements",
+            href: "/#achievements",
         },
         {
             title: "Contact",
-            href: "/contact",
+            href: "/#contact",
         },
     ],
     links: {
-        facebook: "#",
-        instagram: "#",
+        facebook: "https://facebook.com",
+        instagram: "https://www.instagram.com/xz1smail/?hl=th",
         github: "https://github.com/ZismailDev",
         linkedin: "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
         email: "nattapong130247@gmail.com",
     },
+    googleAnalyticsId: "G-6NK28QG827",
 }
