@@ -43,5 +43,6 @@
       "postcss": "8.5.13",
       "@tootallnate/once": "3.0.1"
     }
-  }
+  },
+  "packageManager": "pnpm@11.0.8"
 }
