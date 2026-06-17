@@ -106,7 +106,7 @@ export const projectsData: Project[] = [
         iconColor: "text-amber-400",
         techStack: ["Next.js 16", "HeroUI v3", "Prisma", "Supabase"],
         links: {
-            preview: "https://thaitan-ticket-silk.vercel.app/",
+            preview: "https://www.thaitanticket.com/",
             github: ""
         },
         featured: true,
