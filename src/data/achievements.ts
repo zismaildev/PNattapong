@@ -19,6 +19,16 @@ export type Achievement = {
 
 export const achievementsData: Achievement[] = [
     {
+        id: "cmru-climate-change-awareness",
+        title: "หลักสูตรการสร้างความตระหนักเกี่ยวกับการเปลี่ยนแปลงสภาพภูมิอากาศ",
+        category: "training",
+        date: "2026",
+        issuer: "สถาบันวิจัยและพัฒนา มหาวิทยาลัยราชภัฏเชียงใหม่",
+        description: "เข้าร่วมการอบรมเชิงปฏิบัติการหลักสูตรการสร้างความตระหนักเกี่ยวกับการเปลี่ยนแปลงสภาพภูมิอากาศ สำหรับนักศึกษามหาวิทยาลัยราชภัฏเชียงใหม่และคนในชุมชนเขตพื้นที่จังหวัดเชียงใหม่ รุ่นที่ 1",
+        image: "/certificates/cmru-climate-change-awareness.png",
+        tags: ["Climate Change", "CMRU", "Workshop"]
+    },
+    {
         id: "cmru-outstanding-student",
         title: "นักศึกษากิจกรรมเด่น ประจำปี 2567",
         category: "award",
