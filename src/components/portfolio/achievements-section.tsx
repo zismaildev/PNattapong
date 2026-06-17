@@ -5,6 +5,7 @@ import { achievementsData, AchievementCategory, Achievement } from "@/data/achie
 import { Icon } from "@iconify/react";
 import { useIsDark } from "@/hooks/use-is-dark";
 import Image from "next/image";
+import { useI18n } from "@/context/i18n-context";
 
 const categories: { label: string; value: AchievementCategory | "all" }[] = [
     { label: "All", value: "all" },
@@ -22,6 +23,8 @@ export const AchievementsSection = () => {
     const [activeTab, setActiveTab] = useState<AchievementCategory | "all">("all");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [visibleCount, setVisibleCount] = useState(6);
+    const { t, locale } = useI18n();
+    
 
     // Prevent hydration mismatch
     if (!mounted) {
@@ -58,10 +61,10 @@ export const AchievementsSection = () => {
             <div className="flex flex-col items-center text-center mb-12 px-6">
                 <span className="font-mono text-indigo-400 text-[10px] uppercase tracking-widest mb-4">MILESTONES.log</span>
                 <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white">
-                    Achievements & Awards.
+                    {t("Achievements.title")}
                 </h2>
                 <p className="mt-4 text-slate-500 dark:text-slate-400 max-w-2xl text-sm">
-                    A showcase of my continuous learning journey, professional certifications, and recognitions in the tech industry.
+                    {t("Achievements.description")}
                 </p>
             </div>
 
@@ -77,7 +80,7 @@ export const AchievementsSection = () => {
                                 : "bg-white text-slate-600 border-slate-200 hover:border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-white/10 dark:hover:border-white/30"
                         }`}
                     >
-                        {category.label}
+                        {t(`Achievements.categories.${category.value}`)}
                     </button>
                 ))}
             </div>
@@ -102,7 +105,7 @@ export const AchievementsSection = () => {
                                 </div>
                                 <Image 
                                     src={achievement.image} 
-                                    alt={achievement.title}
+                                    alt={typeof achievement.title === 'string' ? achievement.title : achievement.title[locale]}
                                     fill
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     className="object-cover transform group-hover:scale-105 transition-transform duration-500"
@@ -121,16 +124,16 @@ export const AchievementsSection = () => {
                                 </div>
                                 
                                 <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2 line-clamp-2">
-                                    {achievement.title}
+                                    {typeof achievement.title === 'string' ? achievement.title : achievement.title[locale]}
                                 </h3>
                                 
                                 <div className="flex items-center gap-2 mb-4 text-sm text-slate-600 dark:text-slate-400">
                                     <Icon icon="mdi:bank-outline" className="text-slate-400 shrink-0" />
-                                    <span className="truncate">{achievement.issuer}</span>
+                                    <span className="truncate">{typeof achievement.issuer === 'string' ? achievement.issuer : achievement.issuer[locale]}</span>
                                 </div>
 
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-3">
-                                    {achievement.description}
+                                    {typeof achievement.description === 'string' ? achievement.description : achievement.description[locale]}
                                 </p>
 
                                 {/* Tags */}
@@ -149,7 +152,7 @@ export const AchievementsSection = () => {
                 {filteredAchievements.length === 0 && (
                     <div className="w-full py-20 flex flex-col items-center justify-center text-slate-400 dark:text-slate-600">
                         <Icon icon="mdi:file-document-outline" className="text-6xl mb-4 opacity-50" />
-                        <p>No achievements found for this category.</p>
+                        <p>{t("Achievements.no_achievements")}</p>
                     </div>
                 )}
 
@@ -159,7 +162,7 @@ export const AchievementsSection = () => {
                             onClick={() => setVisibleCount(prev => prev + 6)}
                             className="group flex items-center gap-2 px-6 py-3 bg-white dark:bg-white/5 hover:bg-slate-50 dark:hover:bg-white/10 text-slate-700 dark:text-white border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 rounded-full font-bold text-sm transition-all duration-300"
                         >
-                            <span>Load More</span>
+                            <span>{t("Achievements.load_more")}</span>
                             <Icon icon="mdi:chevron-down" className="text-lg group-hover:translate-y-0.5 transition-transform" />
                         </button>
                     </div>

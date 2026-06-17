@@ -7,6 +7,7 @@ import {
 
 import { siteConfig } from "@/config/site";
 import { Icon } from "@iconify/react";
+import { useI18n } from "@/context/i18n-context";
 
 interface FooterCompProps {
     appVersion?: {
@@ -35,6 +36,7 @@ export default function FooterComp({
     hideCredits = false,
 }: FooterCompProps) {
     const state = useOverlayState();
+    const { t } = useI18n();
 
     const appVersion = providedAppVersion || {
         project: "0.1.0",
@@ -63,7 +65,7 @@ export default function FooterComp({
                             </p>
                             {!hideCredits && (
                                 <div className="flex flex-wrap items-center justify-center md:justify-start gap-1 text-[11px]">
-                                    <span>Designed & Developed by</span>
+                                    <span>{t("Footer.designed_by")}</span>
                                     <a
                                         className="font-bold text-primary hover:underline transition-all"
                                         href={siteConfig.links?.github || "#"}
@@ -73,7 +75,7 @@ export default function FooterComp({
                                         ZismailDev
                                     </a>
                                     <span className="opacity-60 hidden sm:inline ml-1">
-                                        (Student in Computer Science, Faculty of Science and Technology, Chiang Mai Rajabhat University.)
+                                        {t("Footer.student_info")}
                                     </span>
                                 </div>
                             )}

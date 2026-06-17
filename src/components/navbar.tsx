@@ -1,14 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import NextLink from "next/link";
+import { useI18n } from "@/context/i18n-context";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "./theme-switch";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+    const lastScrollY = useRef(0);
+    const { t, locale, setLocale } = useI18n();
+
+    const switchLocale = () => {
+        const nextLocale = locale === "en" ? "th" : "en";
+        setLocale(nextLocale);
+    };
 
     useEffect(() => {
         let ticking = false;
@@ -18,15 +25,15 @@ export const Navbar = () => {
 
             if (currentScrollY < 10) {
                 setIsVisible(true);
-            } else if (currentScrollY > lastScrollY) {
-                // Scrolling down
+            } else if (currentScrollY > lastScrollY.current) {
+                // เลื่อนลง -> ซ่อน Navbar
                 setIsVisible(false);
             } else {
-                // Scrolling up
+                // เลื่อนขึ้น -> แสดง Navbar
                 setIsVisible(true);
             }
 
-            setLastScrollY(currentScrollY);
+            lastScrollY.current = currentScrollY;
             ticking = false;
         };
 
@@ -39,11 +46,11 @@ export const Navbar = () => {
 
         window.addEventListener("scroll", onScroll, { passive: true });
         return () => window.removeEventListener("scroll", onScroll);
-    }, [lastScrollY]);
+    }, []);
 
     return (
         <header
-            className={`sticky top-0 z-50 w-full border-b border-default bg-background/80 backdrop-blur-md transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
+            className={`fixed top-0 inset-x-0 z-50 w-full border-b border-default bg-background/80 backdrop-blur-md transition-transform duration-300 ${isVisible ? "translate-y-0" : "-translate-y-full"
                 }`}
         >
             <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -63,7 +70,7 @@ export const Navbar = () => {
                                 href={item.href}
                                 className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
                             >
-                                {item.title}
+                                {t(item.title.toLowerCase())}
                             </NextLink>
                         ))}
                     </nav>
@@ -71,6 +78,12 @@ export const Navbar = () => {
 
                 {/* Right Side Actions */}
                 <div className="flex items-center gap-4">
+                    <button
+                        onClick={switchLocale}
+                        className="text-sm font-bold tracking-wider text-foreground/80 hover:text-foreground transition-colors px-2 py-1 border border-default rounded-md uppercase"
+                    >
+                        {locale === "en" ? "TH" : "EN"}
+                    </button>
                     <ThemeSwitch />
 
                     {/* Mobile Menu Toggle */}
@@ -99,7 +112,7 @@ export const Navbar = () => {
                                 className="text-lg font-semibold text-foreground/80 hover:text-foreground"
                                 onClick={() => setIsMenuOpen(false)}
                             >
-                                {item.title}
+                                {t(item.title.toLowerCase())}
                             </NextLink>
                         ))}
                     </nav>
@@ -108,5 +121,3 @@ export const Navbar = () => {
         </header>
     );
 };
-
-

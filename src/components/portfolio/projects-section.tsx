@@ -8,12 +8,15 @@ import { Icon } from "@iconify/react";
 import { useInView } from "@/hooks/use-in-view";
 import { useIsDark } from "@/hooks/use-is-dark";
 
-import Link from "next/link";
+import NextLink from "next/link";
 import { projectsData } from "@/data/projects";
+import { useI18n } from "@/context/i18n-context";
 
 export const ProjectsSection = () => {
     const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { t, locale } = useI18n();
+    
 
     return (
         <section
@@ -33,10 +36,10 @@ export const ProjectsSection = () => {
                 <div className={`flex flex-col items-center text-center mb-16 md:mb-24 ${isInView ? "animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both" : "opacity-0"}`}>
                     <span className="font-mono text-blue-400 text-xs uppercase tracking-widest mb-4">WORKS.tsx</span>
                     <h2 className={`text-4xl md:text-5xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>
-                        Featured Projects.
+                        {t("Projects.title")}
                     </h2>
                     <p className={`mt-4 text-lg max-w-2xl font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                        Some of the systems, websites, and applications I&apos;ve built from the ground up.
+                        {t("Projects.description")}
                     </p>
                 </div>
 
@@ -70,17 +73,17 @@ export const ProjectsSection = () => {
 
                                 <div className="mb-8 flex-grow">
                                     <div className="flex items-center gap-3 mb-3">
-                                        <Link href={`/projects/${project.id}`} className={`text-2xl font-black tracking-tight hover:underline transition-all ${isDark ? "text-slate-100" : "text-slate-900"}`}>
-                                            {project.title}
-                                        </Link>
+                                        <NextLink href={`/projects/${project.id}`} className={`text-2xl font-black tracking-tight hover:underline transition-all ${isDark ? "text-slate-100" : "text-slate-900"}`}>
+                                            {project.title[locale]}
+                                        </NextLink>
                                         {project.featured && (
                                             <Chip size="sm" variant="soft" className={`h-5 px-1.5 text-[9px] font-black tracking-widest uppercase ${isDark ? "bg-blue-500/20 text-blue-400" : "bg-blue-100 text-blue-700"}`}>
-                                                Featured
+                                                {t("Projects.featured")}
                                             </Chip>
                                         )}
                                     </div>
                                     <p className={`text-sm leading-relaxed font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>
-                                        {project.shortDescription}
+                                        {project.shortDescription[locale]}
                                     </p>
                                 </div>
 
@@ -94,12 +97,12 @@ export const ProjectsSection = () => {
                                         </span>
                                     ))}
                                 </div>
-                                <Link 
+                                <NextLink 
                                     href={`/projects/${project.id}`}
                                     className={`flex items-center gap-2 text-sm font-bold mt-2 w-fit transition-colors ${isDark ? "text-indigo-400 hover:text-indigo-300" : "text-indigo-600 hover:text-indigo-700"}`}
                                 >
-                                    View Case Study <Icon icon="mdi:arrow-right" />
-                                </Link>
+                                    {t("Projects.view_case_study")} <Icon icon="mdi:arrow-right" />
+                                </NextLink>
                             </div>
                         </div>
                     ))}
@@ -114,7 +117,7 @@ export const ProjectsSection = () => {
                             }`}
                     >
                         <Icon icon="mdi:github" className="mr-3 text-lg" />
-                        VIEW MORE ON GITHUB
+                        {t("Projects.view_more")}
                     </a>
                 </div>
             </div>

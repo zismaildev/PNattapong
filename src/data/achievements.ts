@@ -1,12 +1,17 @@
+export type LocaleString = {
+    en: string;
+    th: string;
+};
+
 export type AchievementCategory = "competition" | "research" | "training" | "certification" | "work" | "award" | "activity";
 
 export type Achievement = {
     id: string;
-    title: string;
+    title: string | LocaleString;
     category: AchievementCategory;
     date: string;
-    issuer: string;
-    description: string;
+    issuer: string | LocaleString;
+    description: string | LocaleString;
     image: string;
     tags: string[];
     link?: string;

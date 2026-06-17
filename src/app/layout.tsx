@@ -10,6 +10,7 @@ import { ThemeWrapper } from "@/components/theme-wrapper";
 import FooterComp from "@/components/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { I18nProvider } from "@/context/i18n-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -69,11 +70,11 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="th"
+      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="bg-background text-foreground h-full overflow-x-hidden" suppressHydrationWarning>
+      <body className="bg-background text-foreground" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -93,17 +94,19 @@ export default function RootLayout({
           `}
         </Script>
 
-        <NextThemesProvider attribute="class" defaultTheme="dark">
-          <ThemeConfigProvider>
-            <ThemeWrapper>
-              <Navbar />
-              <main className="flex-1 pb-20 md:pb-0">
-                {children}
-              </main>
-              <FooterComp />
-            </ThemeWrapper>
-          </ThemeConfigProvider>
-        </NextThemesProvider>
+        <I18nProvider>
+          <NextThemesProvider attribute="class" defaultTheme="dark">
+            <ThemeConfigProvider>
+              <ThemeWrapper>
+                <Navbar />
+                <main className="flex-1 pb-20 md:pb-0">
+                  {children}
+                </main>
+                <FooterComp />
+              </ThemeWrapper>
+            </ThemeConfigProvider>
+          </NextThemesProvider>
+        </I18nProvider>
         <Analytics />
         <SpeedInsights />
       </body >

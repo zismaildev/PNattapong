@@ -4,6 +4,7 @@ import { useIsDark } from "@/hooks/use-is-dark";
 import { Card, Chip } from "@heroui/react";
 import NextLink from "next/link";
 import { Icon } from "@iconify/react";
+import { useI18n } from "@/context/i18n-context";
 
 const TECH_STACK = ["Next.js", "TypeScript", "RAG", "LangChain.js", "Supabase", "Tailwind"] as const;
 
@@ -17,6 +18,7 @@ const PROJECT_STACK = ["Next.js", "LangChain", "pgvector", "Groq"] as const;
 
 export const HeroSection = () => {
     const { isDark } = useIsDark();
+    const { t } = useI18n();
 
     return (
         <section
@@ -53,7 +55,7 @@ export const HeroSection = () => {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                         </span>
-                        AVAILABLE FOR WORK
+                        {t("Hero.available")}
                     </div>
 
                     <div 
@@ -86,29 +88,33 @@ export const HeroSection = () => {
                         className={`text-lg md:text-xl max-w-lg leading-relaxed font-medium opacity-0 animate-fade-in-up ${isDark ? "text-slate-400" : "text-slate-600"
                             }`}
                     >
-                        Full-stack Developer. AI Engineer. I build things that work.
+                        {t("Hero.subtitle")}
                     </p>
 
                     <div 
                         style={{ animationDelay: "800ms" }}
                         className="flex flex-wrap gap-8 py-2 opacity-0 animate-fade-in-up"
                     >
-                        {STATS.map((stat, i) => (
-                            <div
-                                key={stat.label}
-                                className={`flex flex-col ${i > 0 ? `border-l pl-8 ${isDark ? "border-white/[0.08]" : "border-slate-200"}` : ""}`}
-                            >
-                                <span
-                                    className={`text-3xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-950"}`}
+                        {STATS.map((stat, i) => {
+                            const keyLabel = stat.label.toLowerCase();
+                            const keySub = `${keyLabel}_sub`;
+                            return (
+                                <div
+                                    key={stat.label}
+                                    className={`flex flex-col ${i > 0 ? `border-l pl-8 ${isDark ? "border-white/[0.08]" : "border-slate-200"}` : ""}`}
                                 >
-                                    {stat.value}
-                                </span>
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">
-                                    {stat.label}
-                                </span>
-                                <span className="text-[10px] text-slate-500/70 mt-0.5">{stat.sub}</span>
-                            </div>
-                        ))}
+                                    <span
+                                        className={`text-3xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-950"}`}
+                                    >
+                                        {stat.value}
+                                    </span>
+                                    <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">
+                                        {t(`Hero.${keyLabel}`)}
+                                    </span>
+                                    <span className="text-[10px] text-slate-500/70 mt-0.5">{t(`Hero.${keySub}`)}</span>
+                                </div>
+                            );
+                        })}
                     </div>
 
                     <div 
@@ -116,7 +122,7 @@ export const HeroSection = () => {
                         className="flex flex-col gap-2 opacity-0 animate-fade-in-up"
                     >
                         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                            STACK
+                            {t("Hero.stack")}
                         </span>
                         <div className="flex flex-wrap gap-1.5">
                             {TECH_STACK.map((tech) => (
@@ -143,7 +149,7 @@ export const HeroSection = () => {
                             href="#projects"
                             className="h-14 px-10 flex items-center justify-center font-bold text-sm rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all duration-300 hover:shadow-indigo-600/30"
                         >
-                            VIEW WORK
+                            {t("Hero.view_work")}
                         </NextLink>
                         <NextLink
                             href="#contact"
@@ -152,7 +158,7 @@ export const HeroSection = () => {
                                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-900/[0.04]"
                                 }`}
                         >
-                            GET IN TOUCH
+                            {t("Hero.get_in_touch")}
                         </NextLink>
                     </div>
                 </div>
@@ -220,10 +226,10 @@ export const HeroSection = () => {
                                         className={`text-2xl font-black tracking-tight ${isDark ? "text-white" : "text-slate-900"
                                             }`}
                                     >
-                                        AI VILLAGE CHATBOT
+                                        {t("Hero.project_title")}
                                     </h3>
                                     <p className={`text-sm leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>
-                                        Automated conversational system for village data. RAG + Hybrid LLM + Telegram Bot.
+                                        {t("Hero.project_desc")}
                                     </p>
                                 </div>
 
@@ -246,7 +252,7 @@ export const HeroSection = () => {
                                         }`}
                                 >
                                     <Icon icon="mdi:star" className="text-yellow-500/80 text-sm" />
-                                    <span>Expert evaluation: <strong className={isDark ? "text-slate-400" : "text-slate-600"}>4.79 / 5.00</strong></span>
+                                    <span>{t("Hero.expert_evaluation")} <strong className={isDark ? "text-slate-400" : "text-slate-600"}>4.79 / 5.00</strong></span>
                                 </div>
 
                                 <a
@@ -258,7 +264,7 @@ export const HeroSection = () => {
                                         : "text-indigo-600 hover:text-indigo-500"
                                         }`}
                                 >
-                                    VIEW PROJECT
+                                    {t("Hero.view_project")}
                                     <Icon icon="mdi:arrow-right" className="text-base" />
                                 </a>
                             </div>
@@ -280,7 +286,7 @@ export const HeroSection = () => {
                                     className={`text-[10px] font-bold uppercase tracking-[0.3em] ${isDark ? "text-slate-400" : "text-slate-600"
                                         }`}
                                 >
-                                    DEPLOYED
+                                    {t("Hero.deployed")}
                                 </span>
                             </div>
                         </div>
@@ -301,7 +307,7 @@ export const HeroSection = () => {
                                     className={`text-[10px] font-bold uppercase tracking-[0.2em] ${isDark ? "text-slate-400" : "text-slate-600"
                                         }`}
                                 >
-                                    RAG
+                                    {t("Hero.rag")}
                                 </span>
                             </div>
                         </div>

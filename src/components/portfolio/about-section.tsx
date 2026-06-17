@@ -8,45 +8,46 @@ import Image from "next/image";
 
 import { useInView } from "@/hooks/use-in-view";
 import { useIsDark } from "@/hooks/use-is-dark";
+import { useI18n } from "@/context/i18n-context";
 
 export const AboutSection = () => {
     const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
+    const { t } = useI18n();
 
 
 
     const education = [
         {
             year: "2023 - Present",
-            institution: "Rajabhat Chiang Mai University",
-            degree: "Bachelor of Science (B.Sc.), Computer Science",
+            institution: t("About.university_val"),
+            degree: t("About.uni_degree"),
             icon: "mdi:school-outline"
         },
         {
             year: "2021 - 2022",
             institution: "Non-Formal Education (NFE) San Sai",
-            degree: "Senior High School (Grade 10-12)",
+            degree: t("About.highschool_degree"),
             icon: "mdi:school-outline"
         }
     ];
 
-
     const detailedInfo = [
-        { label: "FULL NAME", value: "Nattapong Panthiya" },
-        { label: "BRAND", value: "zismaildev" },
-        { label: "EDUCATION", value: "B.Sc. Computer Science" },
-        { label: "UNIVERSITY", value: "Rajabhat Chiang Mai University" },
-        { label: "YEAR", value: "Year 3 → Year 4 (June 2026)" },
-        { label: "LANGUAGES", value: "Thai (Native) · English (B1+)" },
-        { label: "INTERESTS", value: "Full-stack · AI/RAG · Security" },
-        { label: "CURRENTLY", value: "Ticket System · NDEA AI Program" }
+        { label: t("About.full_name"), value: t("About.full_name_val") },
+        { label: t("About.brand"), value: "zismaildev" },
+        { label: t("About.education"), value: t("About.education_val") },
+        { label: t("About.university"), value: t("About.university_val") },
+        { label: t("About.year"), value: t("About.year_val") },
+        { label: t("About.languages"), value: t("About.languages_val") },
+        { label: t("About.interests"), value: t("About.interests_val") },
+        { label: t("About.currently"), value: t("About.currently_val") }
     ];
 
     const quickInfo = [
-        { icon: "mdi:cake-variant", label: "AGE", value: "22" },
-        { icon: "mdi:map-marker", label: "BASED", value: "Chiang Mai" },
-        { icon: "mdi:translate", label: "LANGS", value: "TH / EN" },
-        { icon: "mdi:briefcase", label: "STATUS", value: "Open to Work" }
+        { icon: "mdi:cake-variant", label: t("About.age"), value: "22" },
+        { icon: "mdi:map-marker", label: t("About.based"), value: t("About.based_val") },
+        { icon: "mdi:translate", label: t("About.langs"), value: t("About.langs_val") },
+        { icon: "mdi:briefcase", label: t("About.status"), value: t("About.status_val") }
     ];
 
     return (
@@ -107,8 +108,8 @@ export const AboutSection = () => {
                         <div className={`flex flex-col space-y-8 p-8 lg:p-12 rounded-[40px] border backdrop-blur-sm ${isDark ? "bg-white/[0.02] border-white/[0.05]" : "bg-white/80 border-slate-200 shadow-xl"}`}>
                             <div className="space-y-4">
                                 <span className="font-mono text-indigo-400 text-xs uppercase tracking-widest">ABOUT_ME.tsx</span>
-                                <h2 className={`text-4xl md:text-5xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>Who&apos;s behind the code.</h2>
-                                <p className={`text-lg leading-relaxed max-w-lg font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>Started coding at 15. I design systems, ship AI pipelines, and publish research &mdash; sometimes all at once.</p>
+                                <h2 className={`text-4xl md:text-5xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>{t("About.title")}</h2>
+                                <p className={`text-lg leading-relaxed max-w-lg font-medium ${isDark ? "text-slate-400" : "text-slate-600"}`}>{t("About.description")}</p>
                             </div>
 
                             <div className={`w-full h-px ${isDark ? "bg-white/5" : "bg-slate-200"}`} />
@@ -131,7 +132,7 @@ export const AboutSection = () => {
                 <div className="max-w-4xl mx-auto px-6">
                     <div className="flex flex-col items-center text-center mb-16">
                         <span className="font-mono text-indigo-400 text-[10px] uppercase tracking-widest mb-4">TIMELINE.log</span>
-                        <h2 className={`text-3xl md:text-4xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>Education Pathway.</h2>
+                        <h2 className={`text-3xl md:text-4xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>{t("About.education_title")}</h2>
                     </div>
 
                     <div className="relative border-l border-white/10 ml-4 md:ml-8 space-y-12">

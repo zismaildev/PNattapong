@@ -2,9 +2,11 @@
 
 import { KnowledgeGraph } from "@/components/knowledge-graph";
 import { useIsDark } from "@/hooks/use-is-dark";
+import { useI18n } from "@/context/i18n-context";
 
 export const KnowledgeSection = () => {
     const { isDark } = useIsDark();
+    const { t } = useI18n();
 
     return (
         <section id="knowledge" className={`relative w-full py-20 overflow-hidden ${!isDark ? "bg-slate-100/90" : ""}`}>
@@ -14,11 +16,12 @@ export const KnowledgeSection = () => {
                 <div className="flex flex-col items-center text-center mb-12">
                     <span className="font-mono text-indigo-400 text-[10px] uppercase tracking-[0.3em] mb-4">MAP.graph</span>
                     <h2 className={`text-3xl md:text-5xl font-black tracking-tighter ${isDark ? "text-white" : "text-slate-900"}`}>
-                        Interactive Knowledge Graph.
+                        {t("Knowledge.title")}
                     </h2>
                     <p className="mt-4 text-sm text-slate-500 max-w-lg font-medium leading-relaxed">
-                        Explore the interconnection of my skills, interests, and technical domains.
-                        Feel free to <span className="text-indigo-400">interact</span> with the nodes.
+                        {t("Knowledge.description")}
+                        <span className="text-indigo-400">{t("Knowledge.interact")}</span>
+                        {t("Knowledge.post_interact")}
                     </p>
                 </div>
             </div>

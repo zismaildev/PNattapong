@@ -2,13 +2,15 @@
 
 import { Icon } from "@iconify/react";
 import { useIsDark } from "@/hooks/use-is-dark";
+import { useI18n } from "@/context/i18n-context";
 
 export const SkillsSection = () => {
     const { isDark, mounted } = useIsDark();
+    const { t } = useI18n();
 
     const skillGroups = [
         {
-            title: "Languages",
+            title: t("Skills.languages"),
             skills: [
                 { name: "TypeScript", icon: "mdi:language-typescript", color: "text-blue-400", level: 4 },
                 { name: "JavaScript", icon: "mdi:language-javascript", color: "text-yellow-400", level: 5 },
@@ -25,7 +27,7 @@ export const SkillsSection = () => {
             ]
         },
         {
-            title: "Frameworks",
+            title: t("Skills.frameworks"),
             skills: [
                 { name: "Next.js 16", icon: "ri:nextjs-fill", color: "text-slate-900 dark:text-white", level: 4 },
                 { name: "React 19", icon: "mdi:react", color: "text-cyan-400", level: 4 },
@@ -36,7 +38,7 @@ export const SkillsSection = () => {
             ]
         },
         {
-            title: "Libraries & Tools",
+            title: t("Skills.libraries"),
             skills: [
                 { name: "LangChain", icon: "mdi:link-variant", color: "text-emerald-500", level: 2 },
                 { name: "Prisma", icon: "simple-icons:prisma", color: "text-blue-600", level: 4 },
@@ -50,7 +52,7 @@ export const SkillsSection = () => {
             ]
         },
         {
-            title: "IoT & Hardware",
+            title: t("Skills.iot"),
             skills: [
                 { name: "ESP32", icon: "simple-icons:espressif", color: "text-red-500", level: 3 },
                 { name: "ESP8266", icon: "simple-icons:espressif", color: "text-red-400", level: 3 },
@@ -71,7 +73,7 @@ export const SkillsSection = () => {
             <div className="flex flex-col items-center text-center mb-16 px-6">
                 <span className="font-mono text-indigo-400 text-[10px] uppercase tracking-widest mb-4">CAPABILITIES.sys</span>
                 <h2 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white mb-6">
-                    Technical Mastery.
+                    {t("Skills.title")}
                 </h2>
                 
             </div>

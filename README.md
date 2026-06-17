@@ -17,15 +17,16 @@ A high-performance, SEO-optimized, and visually stunning Single-Page Application
 - **Glassmorphism UI:** Modern, translucent interface built with HeroUI v3 and Tailwind CSS.
 - **Dynamic Background:** Ambient particles and floating orbs that adapt to light/dark themes.
 
-### 🚀 Technical Excellence (SEO & AEO)
-- **SPA Architecture:** Seamless hash-based navigation for zero-latency page transitions.
+### 🚀 Technical Excellence (SEO, AEO & i18n)
+- **Custom i18n System:** Lightweight, high-performance internationalization (TH/EN) built from scratch without external dependencies.
+- **SPA Architecture:** Seamless navigation for zero-latency page transitions.
 - **AI Search Ready:** Optimized for AI-driven search engines (AEO) with structured JSON-LD (Person schema).
 - **Full SEO Suite:** Automated sitemaps, robots.txt, and comprehensive OpenGraph/Twitter metadata.
 - **Light/Dark Synchronized:** Consistent visual quality across both theme modes with a muted, professional light theme.
 
 ## 🛠️ Tech Stack
 
-- **Framework:** [Next.js 16.2.4](https://nextjs.org/) (App Router)
+- **Framework:** [Next.js 16.2.6](https://nextjs.org/) (App Router)
 - **UI Components:** [HeroUI v3](https://heroui.com/)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
 - **Icons:** [Iconify](https://iconify.design/)
@@ -54,10 +55,10 @@ src/
 git clone https://github.com/ZismailDev/PNattapong.git
 
 # Install dependencies
-npm install
+pnpm install
 
 # Run development server
-npm run dev
+pnpm dev
 ```
 
 ## 📝 License
