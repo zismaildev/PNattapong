@@ -62,6 +62,7 @@ export const th = {
     "Achievements.load_more": "โหลดเพิ่มเติม",
     "Achievements.no_achievements": "ไม่พบความสำเร็จในหมวดหมู่นี้",
     "Achievements.categories.all": "ทั้งหมด",
+    "Achievements.categories.featured": "โดดเด่น",
     "Achievements.categories.award": "รางวัล",
     "Achievements.categories.certification": "ใบรับรอง",
     "Achievements.categories.training": "การฝึกอบรม",

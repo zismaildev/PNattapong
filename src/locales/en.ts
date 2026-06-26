@@ -62,6 +62,7 @@ export const en = {
     "Achievements.load_more": "Load More",
     "Achievements.no_achievements": "No achievements found for this category.",
     "Achievements.categories.all": "All",
+    "Achievements.categories.featured": "Featured",
     "Achievements.categories.award": "Award",
     "Achievements.categories.certification": "Certification",
     "Achievements.categories.training": "Training",

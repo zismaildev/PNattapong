@@ -11,6 +11,8 @@ import FooterComp from "@/components/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { I18nProvider } from "@/context/i18n-context";
+import { achievementsData } from "@/data/achievements";
+import { projectsData } from "@/data/projects";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +25,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: siteConfig.name,
     template: `%s - ${siteConfig.name}`,
@@ -36,38 +39,72 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Nattapong Panthiya",
-  "alternateName": ["ณัฐพงษ์ ปันธิยะ", "ZismailDev"],
-  "url": "https://pnattapong.vercel.app",
-  "jobTitle": "Full-Stack Developer",
-  "alumniOf": {
-    "@type": "CollegeOrUniversity",
-    "name": "Chiang Mai Rajabhat University"
-  },
-  "knowsAbout": [
-    "Next.js",
-    "TypeScript",
-    "AI/RAG",
-    "Go (Golang)",
-    "Docker",
-    "Proxmox",
-    "System Architecture"
-  ],
-  "sameAs": [
-    "https://github.com/ZismailDev",
-    "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
-    "https://fastwork.co/user/zismail"
-  ]
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Nattapong Panthiya",
+    "alternateName": ["ณัฐพงษ์ ปันธิยะ", "ZismailDev", "Zismail"],
+    "url": siteConfig.url,
+    "image": `${siteConfig.url}/profile.jpg`,
+    "jobTitle": "Full-Stack Developer",
+    "gender": "Male",
+    "nationality": {
+      "@type": "Country",
+      "name": "Thailand"
+    },
+    "description": "Full-Stack Developer and CS student specializing in high-performance web systems, Next.js, and AI integration (RAG).",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Chiang Mai Rajabhat University",
+      "sameAs": "https://www.cmru.ac.th"
+    },
+    "knowsAbout": [
+      "Next.js",
+      "TypeScript",
+      "React",
+      "Tailwind CSS",
+      "Node.js",
+      "PostgreSQL",
+      "AI & LLM RAG Pipelines",
+      "Cloudflare Workers",
+      "Supabase",
+      "Prisma",
+      "Go (Golang)",
+      "Docker",
+      "Proxmox",
+      "System Architecture",
+      "ESP32",
+      "IoT"
+    ],
+    "sameAs": [
+      "https://github.com/ZismailDev",
+      "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
+      "https://fastwork.co/user/zismail",
+      "https://facebook.com/nattapong130247",
+      "https://www.instagram.com/xz1smail/?hl=th"
+    ],
+    "hasCredential": achievementsData.map(ach => ({
+      "@type": "EducationalOccupationalCredential",
+      "name": typeof ach.title === 'string' ? ach.title : ach.title.en,
+      "credentialCategory": ach.category,
+      "recognizedBy": {
+        "@type": "Organization",
+        "name": typeof ach.issuer === 'string' ? ach.issuer : ach.issuer.en
+      }
+    })),
+    "publishingPrinciples": projectsData.map(proj => ({
+      "@type": "CreativeWork",
+      "name": proj.title.en,
+      "description": proj.shortDescription.en,
+      "genre": "Software Application",
+      "url": proj.links.preview || proj.links.github || siteConfig.url
+    }))
+  };
   return (
     <html
       lang="th"

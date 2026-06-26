@@ -39,8 +39,7 @@ export const AboutSection = () => {
         { label: t("About.university"), value: t("About.university_val") },
         { label: t("About.year"), value: t("About.year_val") },
         { label: t("About.languages"), value: t("About.languages_val") },
-        { label: t("About.interests"), value: t("About.interests_val") },
-        { label: t("About.currently"), value: t("About.currently_val") }
+        { label: t("About.interests"), value: t("About.interests_val") }
     ];
 
     const quickInfo = [

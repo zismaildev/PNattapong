@@ -7,8 +7,9 @@ import { useIsDark } from "@/hooks/use-is-dark";
 import Image from "next/image";
 import { useI18n } from "@/context/i18n-context";
 
-const categories: { label: string; value: AchievementCategory | "all" }[] = [
+const categories: { label: string; value: AchievementCategory | "all" | "featured" }[] = [
     { label: "All", value: "all" },
+    { label: "Featured", value: "featured" },
     { label: "Award", value: "award" },
     { label: "Certification", value: "certification" },
     { label: "Training", value: "training" },
@@ -20,7 +21,7 @@ const categories: { label: string; value: AchievementCategory | "all" }[] = [
 
 export const AchievementsSection = () => {
     const { mounted } = useIsDark();
-    const [activeTab, setActiveTab] = useState<AchievementCategory | "all">("all");
+    const [activeTab, setActiveTab] = useState<AchievementCategory | "all" | "featured">("all");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [visibleCount, setVisibleCount] = useState(6);
     const { t, locale } = useI18n();
@@ -31,14 +32,18 @@ export const AchievementsSection = () => {
         return <section id="achievements" className="w-full py-20 opacity-0"></section>;
     }
 
-    const filteredAchievements = achievementsData.filter(
-        (achievement) => activeTab === "all" || achievement.category === activeTab
-    );
+    const filteredAchievements = achievementsData
+        .filter((achievement) => {
+            if (activeTab === "all") return true;
+            if (activeTab === "featured") return achievement.featured;
+            return achievement.category === activeTab;
+        })
+        .sort((a, b) => b.date.localeCompare(a.date));
 
     const visibleAchievements = filteredAchievements.slice(0, visibleCount);
 
     // Reset visible count when changing tabs
-    const handleTabChange = (category: AchievementCategory | "all") => {
+    const handleTabChange = (category: AchievementCategory | "all" | "featured") => {
         setActiveTab(category);
         setVisibleCount(6);
     };
@@ -73,7 +78,7 @@ export const AchievementsSection = () => {
                 {categories.map((category) => (
                     <button
                         key={category.value}
-                        onClick={() => handleTabChange(category.value as AchievementCategory | "all")}
+                        onClick={() => handleTabChange(category.value as AchievementCategory | "all" | "featured")}
                         className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 border ${
                             activeTab === category.value
                                 ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-md"

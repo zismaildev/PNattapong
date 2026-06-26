@@ -12,6 +12,7 @@ import { ContactSection } from "@/components/portfolio/contact-section";
 const siteUrl = siteConfig.url;
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: `${siteConfig.name}`,
   description:
     "Portfolio ของณัฐพงษ์ ปันธิยะ — Full-Stack Developer & SysAdmin เชี่ยวชาญ Next.js, TypeScript, Relational DB Design, Role-based Systems และ Digital Document Processing พร้อมรับงานฝึกงาน/งานจริง 2026",
@@ -67,39 +68,8 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Nattapong Panthiya",
-    "alternateName": "Zismail",
-    "url": siteUrl,
-    "image": `${siteUrl}/profile.jpg`,
-    "jobTitle": "Full-Stack Developer",
-    "knowsAbout": [
-      "Next.js",
-      "TypeScript",
-      "React",
-      "Tailwind CSS",
-      "Node.js",
-      "PostgreSQL",
-      "AI & LLM RAG Pipelines",
-      "Cloudflare Workers",
-      "Supabase"
-    ],
-    "description": "Full-Stack Developer and CS student specializing in high-performance web systems and AI integration.",
-    "sameAs": [
-      "https://github.com/ZismailDev",
-      "https://linkedin.com/in/zismail",
-      "https://facebook.com/nattapong130247"
-    ]
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
       <main className="flex flex-col items-center">
         <HeroSection />
         <div className="section-divider" />
