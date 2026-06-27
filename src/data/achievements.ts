@@ -26,14 +26,14 @@ export const achievementsData: Achievement[] = [
             th: "รางวัลนำเสนอยอดเยี่ยม ประเภท Oral Presentation"
         },
         category: "award",
-        date: "2024",
+        date: "2026",
         issuer: {
             en: "Faculty of Science and Technology, CMRU",
             th: "คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏเชียงใหม่"
         },
         description: {
             en: "Received the Excellent Oral Presentation Award for the research on the Development of an Automated Interactive System for Village Basic Data Management at the 4th National Conference on Science and Technology.",
-            th: "ได้รับรางวัลนำเสนอยอดเยี่ยม ประเภท Oral Presentation สำหรับงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4"
+            th: "ได้รับรางวัลนำเสนอยอดเยี่ยม ประเภท Oral Presentation สำหรับงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
         },
         image: "/certificates/ai-village-excellent-award.png",
         tags: ["Award", "Research", "AI", "CMRU"],
@@ -46,17 +46,18 @@ export const achievementsData: Achievement[] = [
             th: "การนำเสนอผลงานวิจัยแบบ Oral Presentation งานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4"
         },
         category: "research",
-        date: "2024",
+        date: "2026",
         issuer: {
             en: "Faculty of Science and Technology, CMRU",
             th: "คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏเชียงใหม่"
         },
         description: {
             en: "Presented the research paper titled 'Development of an Automated Interactive System for Village Basic Data Management' at the 4th National Conference on Science and Technology.",
-            th: "นำเสนอผลงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4"
+            th: "นำเสนอผลงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
         },
         image: "/certificates/ai-village-presentation.png",
-        tags: ["Research", "Conference", "CMRU"]
+        tags: ["Research", "Conference", "CMRU"],
+        featured: true
     },
     {
         id: "cmru-cs-outstanding-student-2569",
