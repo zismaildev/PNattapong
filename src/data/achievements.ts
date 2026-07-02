@@ -20,6 +20,26 @@ export type Achievement = {
 
 export const achievementsData: Achievement[] = [
     {
+        id: "link-certified-network-cabling-lcce",
+        title: {
+            en: "LINK Certified Network Cabling for Engineering (LCCE)",
+            th: "การอบรมหลักสูตร LINK Certified Network Cabling for Engineering (LCCE)"
+        },
+        category: "certification",
+        date: "2026",
+        issuer: {
+            en: "Digital CMRU",
+            th: "สำนักดิจิทัลเพื่อการศึกษา มหาวิทยาลัยราชภัฏเชียงใหม่"
+        },
+        description: {
+            en: "Certified for completing practical skills training on signal cables and transmission equipment for effective internet system implementation.",
+            th: "ผ่านการอบรมเพื่อเสริมสร้างทักษะภาคปฏิบัติเกี่ยวกับสายสัญญาณและอุปกรณ์ส่งสัญญาณ สำหรับการนำไปใช้งานในระบบอินเทอร์เน็ตได้อย่างมีประสิทธิภาพ"
+        },
+        image: "/certificates/link-certified-network-cabling-lcce.png",
+        tags: ["Networking", "Cabling", "LCCE"],
+        featured: false
+    },
+    {
         id: "ai-village-excellent-award",
         title: {
             en: "Excellent Oral Presentation Award",
