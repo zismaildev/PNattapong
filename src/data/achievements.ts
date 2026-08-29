@@ -43,7 +43,7 @@ export const achievementsData: Achievement[] = [
         id: "outstanding-activity-student-2026",
         title: {
             en: "Outstanding Student in Activities (National Science Day 2022)",
-            th: "นักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2565"
+            th: "นักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2569"
         },
         category: "award",
         date: "2022",
@@ -53,9 +53,9 @@ export const achievementsData: Achievement[] = [
         },
         description: {
             en: "Awarded as an outstanding student in activities on National Science Day 2022.",
-            th: "ได้รับเกียรติบัตรเป็นนักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2565"
+            th: "ได้รับเกียรติบัตรเป็นนักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2566"
         },
-        image: "/certificates/outstanding-activity-student-2022.png",
+        image: "/certificates/outstanding-activity-student-2026.png",
         tags: ["Award", "Activities", "National Science Day", "CMRU"],
         featured: false
     },
