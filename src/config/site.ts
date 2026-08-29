@@ -4,7 +4,7 @@ export const siteConfig = {
     name: "PNattapong",
     description: "Portfolio Website of Nattapong Panthiya",
     url: "https://pnattapong.vercel.app",
-    icon: "/zismaildev.ico",
+    icon: "/favicon.ico",
     author: "Nattapong Panthiya",
     keywords: ["Nattapong Panthiya", "PNattapong", "Nattapong", "Panthiya", "Fullstack Developer", "Portfolio"],
     navItems: [
