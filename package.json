@@ -1,6 +1,6 @@
 {
   "name": "pnattapong",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "This is portfolio website of PNattapong",
   "author": {
@@ -14,8 +14,8 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@heroui/react": "^3.0.3",
-    "@heroui/styles": "^3.0.3",
+    "@heroui/react": "^3.2.4",
+    "@heroui/styles": "^3.2.4",
     "@iconify/react": "^6.0.2",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
@@ -25,18 +25,18 @@
     "next-themes": "^0.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "tailwind-merge": "^3.5.0"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^20.19.43",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
     "babel-plugin-react-compiler": "1.0.0",
-    "eslint": "^9",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.2.4",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.3"
   },
   "packageManager": "pnpm@11.9.0"
 }

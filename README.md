@@ -1,69 +1,52 @@
-# 🎬 ZismailDev — Cinematic Developer Portfolio
+# PNattapong - Personal Portfolio 🚀
 
-A high-performance, SEO-optimized, and visually stunning Single-Page Application (SPA) developer portfolio built with the latest web technologies. Designed with a "Cinematic Dark" aesthetic and focused on technical excellence.
+เว็บไซต์ Portfolio ส่วนตัวของ **ณัฐพงษ์ ปันธิยะ (Nattapong Panthiya / ZismailDev)** พัฒนาขึ้นด้วยเทคโนโลยีเว็บสมัยใหม่ เพื่อนำเสนอข้อมูลประวัติการศึกษา ประสบการณ์ทำงาน ความสามารถ (Knowledge) ผลงาน (Projects) และเกียรติบัตร (Achievements) ต่างๆ
 
-![Portfolio Preview](https://github.com/ZismailDev/PNattapong/raw/main/public/og-image.png)
+## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4 & HeroUI
+- **Icons:** Iconify
+- **Analytics:** Vercel Analytics & Speed Insights
+- **Theming:** `next-themes` สำหรับจัดการ Light/Dark Mode
+- **Package Manager:** pnpm (v11+)
 
-## ✨ Core Features
+## ✨ ฟีเจอร์หลัก (Features)
+- 🌓 **Dark/Light Mode:** รองรับการเปลี่ยนธีมมืดและสว่าง พร้อมโลโก้แบรนด์ Z แบบ SVG ที่ตอบสนองต่อโหมดสีของเครื่อง
+- 📱 **Responsive Design:** แสดงผลได้อย่างสวยงามบนทุกขนาดหน้าจอตั้งแต่มือถือจนถึงเดสก์ท็อป
+- 🌐 **SEO & Metadata:** ฝังโครงสร้าง Schema.org สำหรับเสิร์ชเอนจิน (JSON-LD)
+- ⚡ **High Performance:** ทำงานได้รวดเร็วและปลอดภัย (ไม่มี Vulnerabilities)
 
-### 🧠 Interactive Knowledge Graph
-- **Force-Directed Graph:** A fully interactive, canvas-based visualization of technical skills and domains.
-- **Dynamic Physics:** Nodes react to drag and hover events with smooth, real-time physics.
-- **Categorized Clusters:** Skills are grouped into clusters (AI/RAG, Full-stack, IoT/Hardware, etc.) for better discovery.
+## 🚀 การติดตั้งและรันโปรเจกต์ (Getting Started)
 
-### 🎭 Cinematic Aesthetic
-- **High Performance:** Completely removed heavy animation libraries (Framer Motion) in favor of lightweight CSS keyframes and custom Canvas animations.
-- **Staggered Entrance:** Premium landing experience with carefully timed entrance animations.
-- **Glassmorphism UI:** Modern, translucent interface built with HeroUI v3 and Tailwind CSS.
-- **Dynamic Background:** Ambient particles and floating orbs that adapt to light/dark themes.
+1. **โคลนโปรเจกต์ (Clone repository):**
+   ```bash
+   git clone https://github.com/ZismailDev/PNattapong.git
+   cd PNattapong
+   ```
 
-### 🚀 Technical Excellence (SEO, AEO & i18n)
-- **Custom i18n System:** Lightweight, high-performance internationalization (TH/EN) built from scratch without external dependencies.
-- **SPA Architecture:** Seamless navigation for zero-latency page transitions.
-- **AI Search Ready:** Optimized for AI-driven search engines (AEO) with structured JSON-LD (Person schema).
-- **Full SEO Suite:** Automated sitemaps, robots.txt, and comprehensive OpenGraph/Twitter metadata.
-- **Light/Dark Synchronized:** Consistent visual quality across both theme modes with a muted, professional light theme.
+2. **ติดตั้ง Dependencies:**
+   *(โปรเจกต์นี้ใช้ `pnpm` ในการจัดการแพ็กเกจ)*
+   ```bash
+   pnpm install
+   ```
 
-## 🛠️ Tech Stack
+3. **รันเซิร์ฟเวอร์จำลอง (Development):**
+   ```bash
+   pnpm dev
+   ```
 
-- **Framework:** [Next.js 16.2.6](https://nextjs.org/) (App Router)
-- **UI Components:** [HeroUI v3](https://heroui.com/)
-- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-- **Icons:** [Iconify](https://iconify.design/)
-- **Interactions:** Custom Force-directed Canvas API
-- **SEO:** Metadata API + JSON-LD
+4. **เปิดดูผลลัพธ์:**
+   เปิดเบราว์เซอร์ไปที่ [http://localhost:3000](http://localhost:3000)
 
-## 📂 Project Structure
+## 📁 โครงสร้างโปรเจกต์โดยสังเขป (Project Structure)
+- `src/app/` - ไฟล์ Layout และ Pages หลักของ Next.js App Router
+- `src/components/` - UI Components ของโปรเจกต์ (Navbar, Footer, ThemeWrapper ฯลฯ)
+- `src/config/` - ไฟล์ตั้งค่าหลักของเว็บไซต์ เช่น ชื่อเว็บและเมนู (`site.ts`)
+- `src/data/` - แหล่งเก็บข้อมูลของส่วนต่างๆ เช่น เกียรติบัตร (`achievements.ts`) และผลงาน (`projects.ts`)
+- `public/` - ไฟล์รูปภาพ, โลโก้ และ Assets แบบ Static
 
-```text
-src/
-├── app/                  # Next.js App Router (SPA Entry)
-├── components/           
-│   ├── portfolio/        # Section-based modular components
-│   ├── theme-wrapper.tsx # Global layout and background effects
-│   └── knowledge-graph   # Interactive Canvas engine
-├── config/               # Centralized site configuration
-├── context/              # Global state providers
-├── hooks/                # Custom React Hooks
-└── styles/               # Global CSS and theme tokens
-```
-
-## ⚡ Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/ZismailDev/PNattapong.git
-
-# Install dependencies
-pnpm install
-
-# Run development server
-pnpm dev
-```
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-Built with 💜 by [Nattapong Panthiya](https://github.com/ZismailDev)
+## 👨‍💻 ผู้พัฒนา (Author)
+**Nattapong Panthiya (ZismailDev)**
+- **Website:** [pnattapong.vercel.app](https://pnattapong.vercel.app)
+- **GitHub:** [ZismailDev](https://github.com/ZismailDev)

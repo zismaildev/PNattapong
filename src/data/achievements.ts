@@ -20,6 +20,66 @@ export type Achievement = {
 
 export const achievementsData: Achievement[] = [
     {
+        id: "digital-skills-training-2026",
+        title: {
+            en: "Digital Competency and Skills Enhancement Project for Final Year Students",
+            th: "โครงการส่งเสริมสมรรถนะและทักษะด้านดิจิทัล สำหรับนักศึกษาชั้นปีสุดท้าย"
+        },
+        category: "training",
+        date: "2026",
+        issuer: {
+            en: "Computer Science Dept, Faculty of Science and Technology, CMRU",
+            th: "ภาควิชาคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏเชียงใหม่"
+        },
+        description: {
+            en: "Participated in the digital competency and skills enhancement project for final year students.",
+            th: "เข้าร่วมโครงการส่งเสริมสมรรถนะและทักษะด้านดิจิทัล สำหรับนักศึกษาชั้นปีสุดท้าย"
+        },
+        image: "/certificates/digital-skills-training-2026.png",
+        tags: ["Training", "Digital Skills", "CMRU"],
+        featured: false
+    },
+    {
+        id: "outstanding-activity-student-2026",
+        title: {
+            en: "Outstanding Student in Activities (National Science Day 2022)",
+            th: "นักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2565"
+        },
+        category: "award",
+        date: "2022",
+        issuer: {
+            en: "Faculty of Science and Technology, CMRU",
+            th: "คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏเชียงใหม่"
+        },
+        description: {
+            en: "Awarded as an outstanding student in activities on National Science Day 2022.",
+            th: "ได้รับเกียรติบัตรเป็นนักศึกษาดีเด่นด้านกิจกรรม เนื่องในงานวันวิทยาศาสตร์แห่งชาติ ประจำปี 2565"
+        },
+        image: "/certificates/outstanding-activity-student-2022.png",
+        tags: ["Award", "Activities", "National Science Day", "CMRU"],
+        featured: false
+    },
+    {
+        id: "digital-literacy-test-2026",
+        title: {
+            en: "Digital Literacy Test Certification (Good Level)",
+            th: "สอบผ่านการวัดความรู้สมรรถนะด้านดิจิทัล (Digital Literacy) ระดับดี"
+        },
+        category: "certification",
+        date: "2026",
+        issuer: {
+            en: "Digital CMRU",
+            th: "สำนักดิจิทัลเพื่อการศึกษา มหาวิทยาลัยราชภัฏเชียงใหม่"
+        },
+        description: {
+            en: "Passed the Digital Literacy test with a 'Good' level for final year students.",
+            th: "สอบผ่านการวัดความรู้สมรรถนะด้านดิจิทัล (Digital Literacy) สำหรับนักศึกษาชั้นปีสุดท้าย อยู่ในเกณฑ์ระดับ ดี"
+        },
+        image: "/certificates/digital-literacy-test-2026.png",
+        tags: ["Certification", "Digital Literacy", "Digital CMRU"],
+        featured: false
+    },
+    {
         id: "link-certified-network-cabling-lcce",
         title: {
             en: "LINK Certified Network Cabling for Engineering (LCCE)",
