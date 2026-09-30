@@ -1,8 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
-import { Button } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import { siteConfig } from "@/config/site";
 
@@ -18,10 +15,10 @@ export const ContactSection = () => {
     const { t } = useI18n();
 
     const socialLinks = [
-        { icon: "mdi:github", href: siteConfig.links.github },
-        { icon: "mdi:linkedin", href: siteConfig.links.linkedin },
-        { icon: "mdi:facebook", href: siteConfig.links.facebook },
-        { icon: "mdi:instagram", href: siteConfig.links.instagram },
+        { name: "GitHub", icon: "mdi:github", href: siteConfig.links.github },
+        { name: "LinkedIn", icon: "mdi:linkedin", href: siteConfig.links.linkedin },
+        { name: "Facebook", icon: "mdi:facebook", href: siteConfig.links.facebook },
+        { name: "Instagram", icon: "mdi:instagram", href: siteConfig.links.instagram },
     ];
 
     return (
@@ -82,7 +79,7 @@ export const ContactSection = () => {
                                 href={social.href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                aria-label={`Visit my ${social.icon.split("Contact.:")[1]}`}
+                                aria-label={`Visit my ${social.name}`}
                                 className={`w-12 h-12 rounded-2xl flex items-center justify-center border transition-all duration-300 hover:-translate-y-1 ${isDark ? "bg-white/[0.03] border-white/[0.08] text-slate-400 hover:border-indigo-500/50 hover:text-white" : "bg-white border-slate-200 text-slate-500 hover:border-indigo-500 hover:text-indigo-600 shadow-sm"}`}
                             >
                                 <Icon icon={social.icon} className="text-xl" />

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from "react";
 import { th } from "@/locales/th";
 
 type Locale = "th" | "en";
@@ -19,10 +19,11 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
         th,    // Thai is preloaded
         en: {} // English is lazy loaded
     });
+    const loadedLocales = useRef<Set<Locale>>(new Set(["th"]));
 
     useEffect(() => {
-        // Skip Thai (already loaded) or if already loaded
-        if (locale !== "th" && Object.keys(translations[locale]).length === 0) {
+        // Skip if already loaded
+        if (!loadedLocales.current.has(locale)) {
             const loadLocale = async () => {
                 try {
                     let loadedTranslations: Record<string, string> = {};
@@ -31,6 +32,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
                         loadedTranslations = (await import("@/locales/en")).en;
                     }
                     
+                    loadedLocales.current.add(locale);
                     setTranslations(prev => ({
                         ...prev,
                         [locale]: loadedTranslations
@@ -42,7 +44,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
             
             loadLocale();
         }
-    }, [locale, translations]);
+    }, [locale]);
 
     // Restore locale on mount
     useEffect(() => {

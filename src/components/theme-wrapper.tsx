@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { useThemeConfig } from "@/context/theme-context";
-import { KnowledgeGraph } from "./knowledge-graph";
 import { Particles } from "./particles-bg";
 
 interface ThemeWrapperProps {
@@ -32,37 +31,6 @@ export function ThemeWrapper({ children }: ThemeWrapperProps) {
 
     return (
         <>
-            <style>{`
-                @keyframes orb-float-1 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    33%  { transform: translate(60px, -80px) scale(1.15); }
-                    66%  { transform: translate(-40px, 40px) scale(0.9); }
-                }
-                @keyframes orb-float-2 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    33%  { transform: translate(-70px, 60px) scale(1.1); }
-                    66%  { transform: translate(50px, -50px) scale(0.95); }
-                }
-                @keyframes orb-float-3 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    50%  { transform: translate(40px, 70px) scale(1.2); }
-                }
-                @keyframes orb-float-4 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    40%  { transform: translate(-50px, -60px) scale(1.05); }
-                    80%  { transform: translate(30px, 40px) scale(0.92); }
-                }
-                @keyframes grid-pan {
-                    0%   { background-position: 0px 0px; }
-                    100% { background-position: 60px 60px; }
-                }
-                .orb-1 { animation: orb-float-1 14s ease-in-out infinite; }
-                .orb-2 { animation: orb-float-2 18s ease-in-out infinite; }
-                .orb-3 { animation: orb-float-3 12s ease-in-out infinite; }
-                .orb-4 { animation: orb-float-4 20s ease-in-out infinite; }
-                .grid-pan { animation: grid-pan 8s linear infinite; }
-            `}</style>
-
             <div className={`relative min-h-screen w-full flex flex-col overflow-x-hidden transition-colors duration-700 ${isDark ? "bg-background" : "bg-slate-100"}`}>
 
 

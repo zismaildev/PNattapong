@@ -39,12 +39,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const jsonLd = {
+
+const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Nattapong Panthiya",
@@ -90,21 +86,57 @@ export default function RootLayout({
     ],
     "hasCredential": achievementsData.map(ach => ({
       "@type": "EducationalOccupationalCredential",
-      "name": typeof ach.title === 'string' ? ach.title : ach.title.en,
+      "name": ach.title.en,
       "credentialCategory": ach.category,
       "recognizedBy": {
         "@type": "Organization",
-        "name": typeof ach.issuer === 'string' ? ach.issuer : ach.issuer.en
+        "name": ach.issuer.en
       }
     })),
-    "publishingPrinciples": projectsData.map(proj => ({
-      "@type": "CreativeWork",
-      "name": proj.title.en,
-      "description": proj.shortDescription.en,
-      "genre": "Software Application",
-      "url": proj.links.preview || proj.links.github || siteConfig.url
-    }))
+    "owns": [
+      {
+        "@type": "ScholarlyArticle",
+        "headline": "The Development of an Automated Conversational System for Basic Village Data Management",
+        "alternateName": "การพัฒนาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน",
+        "author": [
+          { "@type": "Person", "name": "Nattapong Panthiya" },
+          { "@type": "Person", "name": "Rosalin Petagon" },
+          { "@type": "Person", "name": "Oranuch Pantho" }
+        ],
+        "datePublished": "2026-09-02",
+        "isPartOf": {
+          "@type": "PublicationIssue",
+          "issueNumber": "3",
+          "isPartOf": {
+            "@type": "PublicationVolume",
+            "volumeNumber": "1",
+            "isPartOf": {
+              "@type": "Periodical",
+              "name": "Journal of Applied Science Innovation and Materials Technology",
+              "issn": "3088-3229"
+            }
+          }
+        },
+        "pageStart": "14",
+        "pageEnd": "27",
+        "url": "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339",
+        "sameAs": "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339/266"
+      },
+      ...projectsData.map(proj => ({
+        "@type": "CreativeWork",
+        "name": proj.title.en,
+        "description": proj.shortDescription.en,
+        "genre": "Software Application",
+        "url": proj.links.preview || proj.links.github || siteConfig.url
+      }))
+    ]
   };
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="th"

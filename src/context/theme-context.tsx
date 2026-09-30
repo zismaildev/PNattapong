@@ -1,35 +1,24 @@
 "use client";
 
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext } from "react";
 
 interface ThemeContextType {
     showImage: boolean;
-    setShowImage: (show: boolean) => void;
     backgroundImage: string;
-    setBackgroundImage: (url: string) => void;
     backgroundImageLight: string;
-    setBackgroundImageLight: (url: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+const defaultTheme: ThemeContextType = {
+    showImage: false,
+    backgroundImage: "",
+    backgroundImageLight: "",
+};
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    // ตั้งค่าเริ่มต้นให้แสดงภาพพื้นหลังคอนเสิร์ต (Login style) ตลอดทั้งเว็บไซต์
-    const [showImage, setShowImage] = useState(false);
-    const [backgroundImage, setBackgroundImage] = useState("");
-    const [backgroundImageLight, setBackgroundImageLight] = useState("");
-
-    const value = useMemo(() => ({
-        showImage,
-        setShowImage,
-        backgroundImage,
-        setBackgroundImage,
-        backgroundImageLight,
-        setBackgroundImageLight
-    }), [showImage, backgroundImage, backgroundImageLight]);
-
     return (
-        <ThemeContext.Provider value={value}>
+        <ThemeContext.Provider value={defaultTheme}>
             {children}
         </ThemeContext.Provider>
     );
@@ -41,4 +30,4 @@ export function useThemeConfig() {
         throw new Error("useThemeConfig must be used within a ThemeProvider");
     }
     return context;
-}
+}

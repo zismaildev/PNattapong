@@ -69,25 +69,23 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <>
-      <main className="flex flex-col items-center">
-        <HeroSection />
-        <div className="section-divider" />
-        <AboutSection />
-        <div className="section-divider" />
-        <KnowledgeSection />
-        <div className="section-divider" />
-        <SkillsSection />
-        <div className="section-divider" />
-        <ProjectsSection />
-        <div className="section-divider" />
-        <AchievementsSection />
-        <div className="section-divider" />
-        <LeadershipSection />
-        <div className="section-divider" />
-        <ContactSection />
-      </main>
-    </>
+    <div className="flex flex-col items-center">
+      <HeroSection />
+      <div className="section-divider" />
+      <AboutSection />
+      <div className="section-divider" />
+      <KnowledgeSection />
+      <div className="section-divider" />
+      <SkillsSection />
+      <div className="section-divider" />
+      <ProjectsSection />
+      <div className="section-divider" />
+      <AchievementsSection />
+      <div className="section-divider" />
+      <LeadershipSection />
+      <div className="section-divider" />
+      <ContactSection />
+    </div>
   );
 }
 

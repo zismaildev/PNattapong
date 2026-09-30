@@ -1,18 +1,17 @@
-export type LocaleString = {
-    en: string;
-    th: string;
-};
+import type { LocaleString } from "@/types/locale";
+export type { LocaleString };
 
 export type AchievementCategory = "competition" | "research" | "training" | "certification" | "work" | "award" | "activity";
 
 export type Achievement = {
     id: string;
-    title: string | LocaleString;
+    title: LocaleString;
     category: AchievementCategory;
     date: string;
-    issuer: string | LocaleString;
-    description: string | LocaleString;
+    issuer: LocaleString;
+    description: LocaleString;
     image: string;
+    imagePosition?: string;
     tags: string[];
     link?: string;
     featured?: boolean;
@@ -100,6 +99,28 @@ export const achievementsData: Achievement[] = [
         featured: false
     },
     {
+        id: "jasmt-journal-publication-2026",
+        title: {
+            en: "Published Research Article in JASMT Journal (TCI ThaiJO)",
+            th: "ตีพิมพ์บทความวิจัยในวารสารวิชาการ JASMT (ฐานข้อมูล TCI ThaiJO)"
+        },
+        category: "research",
+        date: "2026",
+        issuer: {
+            en: "Journal of Applied Science Innovation and Materials Technology (Vol. 1, Issue 3)",
+            th: "วารสารนวัตกรรมวิทยาศาสตร์ประยุกต์และเทคโนโลยีวัสดุ (JASMT ปีที่ 1 ฉบับที่ 3)"
+        },
+        description: {
+            en: "First author of 'The Development of an Automated Conversational System for Basic Village Data Management', published in JASMT (ISSN: 3088-3229 Online / 3088-3156 Print), Vol. 1, No. 3 (May–June 2026), pp. 14–27.",
+            th: "ผู้แต่งชื่อแรกของบทความวิจัยเรื่อง 'การพัฒนาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน' ตีพิมพ์ในวารสารวิชาการ JASMT (ISSN: 3088-3229) ปีที่ 1 ฉบับที่ 3 (พ.ค. - มิ.ย. 2569) หน้า 14–27"
+        },
+        image: "/certificates/jasmt-journal-cover-2026.png",
+        imagePosition: "object-top",
+        tags: ["Research", "Journal", "TCI ThaiJO", "RAG", "AI"],
+        link: "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339",
+        featured: true
+    },
+    {
         id: "ai-village-excellent-award",
         title: {
             en: "Excellent Oral Presentation Award",
@@ -113,19 +134,20 @@ export const achievementsData: Achievement[] = [
         },
         description: {
             en: "Received the Excellent Oral Presentation Award for the research on the Development of an Automated Interactive System for Village Basic Data Management at the 4th National Conference on Science and Technology.",
-            th: "ได้รับรางวัลนำเสนอยอดเยี่ยม ประเภท Oral Presentation สำหรับงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
+            th: "ได้รับรางวัลนำเสนอยอดเยี่ยม ประเภท Oral Presentation สำหรับงานวิจัยเรื่อง การพัฒนาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
         },
         image: "/certificates/ai-village-excellent-award.png",
         tags: ["Award", "Research", "AI", "CMRU"],
+        link: "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339",
         featured: true
     },
     {
         id: "ai-village-presentation",
         title: {
-            en: "Oral Presentation at National Conference on Science and Technology",
-            th: "การนำเสนอผลงานวิจัยแบบ Oral Presentation งานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4"
+            en: "Oral Presentation at the 4th National Conference on Science and Technology",
+            th: "การนำเสนอผลงานวิจัยแบบ Oral Presentation งานประชุมวิชาการระดับชาติ ครั้งที่ 4"
         },
-        category: "research",
+        category: "activity",
         date: "2026",
         issuer: {
             en: "Faculty of Science and Technology, CMRU",
@@ -133,11 +155,11 @@ export const achievementsData: Achievement[] = [
         },
         description: {
             en: "Presented the research paper titled 'Development of an Automated Interactive System for Village Basic Data Management' at the 4th National Conference on Science and Technology.",
-            th: "นำเสนอผลงานวิจัยเรื่อง การพัฒาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
+            th: "นำเสนอผลงานวิจัยเรื่อง การพัฒนาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน ในงานประชุมวิชาการวิทยาศาสตร์และเทคโนโลยีระดับชาติ ครั้งที่ 4 พ.ศ. 2569"
         },
         image: "/certificates/ai-village-presentation.png",
-        tags: ["Research", "Conference", "CMRU"],
-        featured: true
+        tags: ["Presentation", "National Conference", "CMRU"],
+        featured: false
     },
     {
         id: "cmru-cs-outstanding-student-2569",

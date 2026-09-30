@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import NextLink from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { useI18n } from "@/context/i18n-context";
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "./theme-switch";
@@ -11,10 +12,66 @@ export const Navbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const lastScrollY = useRef(0);
     const { t, locale, setLocale } = useI18n();
+    const pathname = usePathname();
+    const router = useRouter();
 
     const switchLocale = () => {
         const nextLocale = locale === "en" ? "th" : "en";
         setLocale(nextLocale);
+    };
+
+    // ล้าง #hash บน URL อัตโนมัติหากเปิดหน้าแรกมาพร้อมกับ #section
+    useEffect(() => {
+        if (pathname === "/" && window.location.hash) {
+            const targetId = window.location.hash.replace(/^#+/, "").split("#")[0];
+            const el = document.getElementById(targetId);
+            if (el) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: "smooth" });
+                }, 50);
+            }
+            window.history.replaceState(null, "", "/");
+        }
+    }, [pathname]);
+
+    const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        setIsMenuOpen(false);
+
+        if (href === "/") {
+            if (pathname === "/") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (window.location.hash) {
+                    window.history.replaceState(null, "", "/");
+                }
+            }
+            return;
+        }
+
+        if (href.includes("#")) {
+            const targetId = href.split("#").pop();
+            if (!targetId) return;
+
+            if (pathname === "/") {
+                e.preventDefault();
+                const el = document.getElementById(targetId);
+                if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                }
+                if (window.location.hash) {
+                    window.history.replaceState(null, "", "/");
+                }
+            } else {
+                e.preventDefault();
+                router.push("/");
+                setTimeout(() => {
+                    const el = document.getElementById(targetId);
+                    if (el) {
+                        el.scrollIntoView({ behavior: "smooth" });
+                    }
+                }, 150);
+            }
+        }
     };
 
     useEffect(() => {
@@ -26,8 +83,9 @@ export const Navbar = () => {
             if (currentScrollY < 10) {
                 setIsVisible(true);
             } else if (currentScrollY > lastScrollY.current) {
-                // เลื่อนลง -> ซ่อน Navbar
+                // เลื่อนลง -> ซ่อน Navbar และปิดเมนูมือถือ
                 setIsVisible(false);
+                setIsMenuOpen(false);
             } else {
                 // เลื่อนขึ้น -> แสดง Navbar
                 setIsVisible(true);
@@ -44,8 +102,18 @@ export const Navbar = () => {
             }
         };
 
+        const onKeyDown = (e: KeyboardEvent) => {
+            if (e.key === "Escape") {
+                setIsMenuOpen(false);
+            }
+        };
+
         window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
+        window.addEventListener("keydown", onKeyDown);
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            window.removeEventListener("keydown", onKeyDown);
+        };
     }, []);
 
     return (
@@ -56,7 +124,11 @@ export const Navbar = () => {
             <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
                 {/* Brand / Logo */}
                 <div className="flex items-center gap-8">
-                    <NextLink href="/" className="flex items-center gap-2">
+                    <NextLink
+                        href="/"
+                        onClick={(e) => handleNavClick(e, "/")}
+                        className="flex items-center gap-2"
+                    >
                         <span className="text-xl font-bold tracking-tight text-foreground">
                             {siteConfig.name}
                         </span>
@@ -68,9 +140,10 @@ export const Navbar = () => {
                             <NextLink
                                 key={item.href}
                                 href={item.href}
+                                onClick={(e) => handleNavClick(e, item.href)}
                                 className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
                             >
-                                {t(item.title.toLowerCase())}
+                                {t(`Navigation.${item.title.toLowerCase()}`)}
                             </NextLink>
                         ))}
                     </nav>
@@ -110,9 +183,9 @@ export const Navbar = () => {
                                 key={item.href}
                                 href={item.href}
                                 className="text-lg font-semibold text-foreground/80 hover:text-foreground"
-                                onClick={() => setIsMenuOpen(false)}
+                                onClick={(e) => handleNavClick(e, item.href)}
                             >
-                                {t(item.title.toLowerCase())}
+                                {t(`Navigation.${item.title.toLowerCase()}`)}
                             </NextLink>
                         ))}
                     </nav>

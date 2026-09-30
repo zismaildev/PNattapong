@@ -2,7 +2,6 @@
 
 import { useIsDark } from "@/hooks/use-is-dark";
 import { Card, Chip } from "@heroui/react";
-import NextLink from "next/link";
 import { Icon } from "@iconify/react";
 import { useI18n } from "@/context/i18n-context";
 
@@ -11,10 +10,10 @@ const TECH_STACK = ["Next.js", "TypeScript", "RAG", "LangChain.js", "Supabase", 
 const STATS = [
     { value: "4+", label: "YEARS", sub: "Coding since 15" },
     { value: "5+", label: "SYSTEMS", sub: "In production" },
-    { value: "1", label: "PAPER", sub: "National Conference" },
+    { value: "1", label: "PAPER", sub: "TCI ThaiJO (JASMT)" },
 ] as const;
 
-const PROJECT_STACK = ["Next.js", "LangChain", "pgvector", "Groq"] as const;
+const PROJECT_STACK = ["Next.js", "LangChain.js", "pgvector", "Groq", "OpenRouter"] as const;
 
 export const HeroSection = () => {
     const { isDark } = useIsDark();
@@ -145,21 +144,23 @@ export const HeroSection = () => {
                         style={{ animationDelay: "1200ms" }}
                         className="flex flex-col sm:flex-row items-start gap-4 pt-2 opacity-0 animate-fade-in-up"
                     >
-                        <NextLink
-                            href="#projects"
-                            className="h-14 px-10 flex items-center justify-center font-bold text-sm rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all duration-300 hover:shadow-indigo-600/30"
+                        <button
+                            type="button"
+                            onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                            className="cursor-pointer h-14 px-10 flex items-center justify-center font-bold text-sm rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/20 transition-all duration-300 hover:shadow-indigo-600/30"
                         >
                             {t("Hero.view_work")}
-                        </NextLink>
-                        <NextLink
-                            href="#contact"
-                            className={`h-14 px-10 flex items-center justify-center font-bold text-sm rounded-2xl border border-current transition-all duration-300 ${isDark
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                            className={`cursor-pointer h-14 px-10 flex items-center justify-center font-bold text-sm rounded-2xl border border-current transition-all duration-300 ${isDark
                                 ? "text-slate-400 hover:text-white hover:bg-white/[0.04]"
                                 : "text-slate-600 hover:text-slate-900 hover:bg-slate-900/[0.04]"
                                 }`}
                         >
                             {t("Hero.get_in_touch")}
-                        </NextLink>
+                        </button>
                     </div>
                 </div>
 
@@ -228,7 +229,7 @@ export const HeroSection = () => {
                                     >
                                         {t("Hero.project_title")}
                                     </h3>
-                                    <p className={`text-sm leading-relaxed ${isDark ? "text-slate-500" : "text-slate-500"}`}>
+                                    <p className="text-sm leading-relaxed text-slate-500">
                                         {t("Hero.project_desc")}
                                     </p>
                                 </div>
@@ -247,26 +248,56 @@ export const HeroSection = () => {
                                     ))}
                                 </div>
 
-                                <div
-                                    className={`flex items-center gap-2 pt-1 text-[11px] ${isDark ? "text-slate-600" : "text-slate-400"
-                                        }`}
-                                >
-                                    <Icon icon="mdi:star" className="text-yellow-500/80 text-sm" />
-                                    <span>{t("Hero.expert_evaluation")} <strong className={isDark ? "text-slate-400" : "text-slate-600"}>4.79 / 5.00</strong></span>
+                                <div className="space-y-1.5 pt-1">
+                                    <div
+                                        className="flex items-center gap-2 text-[11px] text-slate-500"
+                                    >
+                                        <Icon icon="mdi:star" className="text-yellow-500/80 text-sm shrink-0" />
+                                        <span>
+                                            {t("Hero.expert_evaluation")}{" "}
+                                            <strong className={isDark ? "text-slate-300" : "text-slate-700"}>4.79 / 5.00</strong>{" "}
+                                            <span className="opacity-75">(S.D. = 0.41)</span>
+                                        </span>
+                                    </div>
+                                    <div
+                                        className="flex items-center gap-2 text-[11px] text-slate-500"
+                                    >
+                                        <Icon icon="mdi:account-heart-outline" className="text-emerald-500/80 text-sm shrink-0" />
+                                        <span>
+                                            {t("Hero.user_satisfaction")}{" "}
+                                            <strong className={isDark ? "text-slate-300" : "text-slate-700"}>4.42 / 5.00</strong>{" "}
+                                            <span className="opacity-75">(S.D. = 0.87)</span>
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <a
-                                    href="https://aichatmoban.cmru.ac.th"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className={`inline-flex items-center gap-2 text-sm font-bold transition-colors duration-300 ${isDark
-                                        ? "text-indigo-400 hover:text-indigo-300"
-                                        : "text-indigo-600 hover:text-indigo-500"
-                                        }`}
-                                >
-                                    {t("Hero.view_project")}
-                                    <Icon icon="mdi:arrow-right" className="text-base" />
-                                </a>
+                                <div className="flex flex-wrap items-center gap-4 pt-1">
+                                    <a
+                                        href="https://aichatmoban.cmru.ac.th"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors duration-300 ${isDark
+                                            ? "text-indigo-400 hover:text-indigo-300"
+                                            : "text-indigo-600 hover:text-indigo-500"
+                                            }`}
+                                    >
+                                        {t("Hero.view_project")}
+                                        <Icon icon="mdi:arrow-right" className="text-sm" />
+                                    </a>
+                                    <span className={isDark ? "text-white/10" : "text-slate-300"}>•</span>
+                                    <a
+                                        href="https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={`inline-flex items-center gap-1.5 text-xs font-bold transition-colors duration-300 ${isDark
+                                            ? "text-emerald-400 hover:text-emerald-300"
+                                            : "text-emerald-600 hover:text-emerald-500"
+                                            }`}
+                                    >
+                                        <Icon icon="mdi:book-open-page-variant-outline" className="text-sm" />
+                                        {t("Hero.read_paper")}
+                                    </a>
+                                </div>
                             </div>
                         </Card>
 

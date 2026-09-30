@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 
@@ -46,7 +44,7 @@ export const ProjectsSection = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
                     {projectsData.map((project, index) => (
                         <div
-                            key={index}
+                            key={project.id}
                             className={`group relative flex flex-col p-8 md:p-10 rounded-[32px] border transition-all duration-500 overflow-hidden ${isInView ? "animate-in fade-in slide-in-from-bottom-12 duration-700 fill-mode-both" : "opacity-0"} ${isDark ? "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] hover:border-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]" : "bg-white/80 border-slate-200 hover:shadow-xl backdrop-blur-md"}`}
                             style={{ animationDelay: `${200 + index * 100}ms` }}
                         >

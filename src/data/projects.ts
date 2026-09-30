@@ -1,16 +1,10 @@
-export type LocaleString = {
-    en: string;
-    th: string;
-};
-
-export type LocaleStringArray = {
-    en: string[];
-    th: string[];
-};
+import type { LocaleString, LocaleStringArray } from "@/types/locale";
+export type { LocaleString, LocaleStringArray };
 
 export type ProjectLink = {
     preview?: string;
     github?: string;
+    paper?: string;
 };
 
 export type ProjectContent = {
@@ -39,57 +33,58 @@ export const projectsData: Project[] = [
         id: "ai-village-chatbot",
         title: { en: "AI Village Chatbot", th: "แชทบอทหมู่บ้าน AI" },
         shortDescription: { 
-            en: "An automated chatbot system powered by Generative AI and RAG for village information services via Telegram, featuring PDPA Shield and a Hybrid RAG Pipeline.",
-            th: "ระบบโต้ตอบอัตโนมัติบนเทคโนโลยี Generative AI และ RAG เพื่อยกระดับการให้บริการข้อมูลหมู่บ้าน ผ่าน Telegram พร้อมระบบ PDPA Shield และ Hybrid RAG Pipeline."
+            en: "An automated conversational system for basic village data management using RAG, Hybrid LLM (Groq + OpenRouter), and Telegram Bot — published in JASMT (TCI ThaiJO).",
+            th: "ระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้านด้วยกระบวนการ RAG และกลยุทธ์ Hybrid LLM (Groq + OpenRouter) ผ่าน Telegram Bot (ตีพิมพ์ในวารสารวิชาการ JASMT บนฐานข้อมูล TCI ThaiJO)"
         },
         icon: "mdi:robot-outline",
         color: "from-blue-500/20 to-indigo-500/20",
         iconColor: "text-blue-400",
-        techStack: ["Next.js 16", "LangChain.js", "Groq", "Gemini", "PostgreSQL"],
+        techStack: ["Next.js", "HeroUI", "Tailwind CSS", "PostgreSQL / pgvector", "Supabase", "Prisma ORM", "LangChain.js", "Groq", "OpenRouter", "Telegram Bot"],
         links: {
             preview: "https://aichatmoban.cmru.ac.th",
-            github: ""
+            github: "",
+            paper: "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339"
         },
         featured: true,
         content: {
             overview: {
-                en: "A Generative AI-powered chatbot designed to provide automated information services for rural villages via Telegram. It integrates a Hybrid Retrieval-Augmented Generation (RAG) pipeline to ensure accurate, context-aware responses based on village data.",
-                th: "แชทบอทที่ขับเคลื่อนด้วย Generative AI ซึ่งออกแบบมาเพื่อให้บริการข้อมูลอัตโนมัติสำหรับหมู่บ้านผ่าน Telegram โดยผสานการทำงานของ Hybrid Retrieval-Augmented Generation (RAG) pipeline เพื่อให้คำตอบที่ถูกต้องและสอดคล้องกับบริบทตามข้อมูลของหมู่บ้าน"
+                en: "Developed and published as a research study titled 'The Development of an Automated Conversational System for Basic Village Data Management' in the Journal of Applied Science Innovation and Materials Technology (JASMT), Vol. 1, Issue 3 (2026), pp. 14–27. The system supports two user roles: Administrators who manage village basic data, news announcements, and welfare information via a web application, and General Users (citizens) who inquire about village information 24/7 via a Telegram Bot powered by NLP and Retrieval-Augmented Generation (RAG).",
+                th: "ผลงานวิจัยตีพิมพ์ในชื่อ 'การพัฒนาระบบโต้ตอบอัตโนมัติเกี่ยวกับการบริหารจัดการข้อมูลพื้นฐานของหมู่บ้าน' ในวารสาร Journal of Applied Science Innovation and Materials Technology (JASMT) ปีที่ 1 ฉบับที่ 3 (2569) หน้า 14–27 ระบบแบ่งผู้ใช้งานเป็น 2 ประเภท ได้แก่ ผู้ดูแลระบบที่สามารถจัดการข้อมูลพื้นฐาน ประกาศข่าวสาร และสวัสดิการผ่านเว็บแอปพลิเคชัน และผู้ใช้งานทั่วไปที่สามารถสอบถามข้อมูลผ่าน Telegram Bot ได้ตลอด 24 ชั่วโมงด้วยเทคโนโลยีประมวลผลภาษาธรรมชาติ (NLP) ร่วมกับกระบวนการ RAG"
             },
             challenges: {
                 en: [
-                    "Handling large amounts of unstructured text data efficiently.",
-                    "Ensuring data privacy and compliance with Thailand's PDPA regulations.",
-                    "Optimizing AI response times on limited network bandwidth in rural areas."
+                    "Local government agencies face delays in providing timely information to citizens due to traditional communication channels having limited hours and accessibility.",
+                    "Ensuring accurate, context-grounded responses from unstructured village announcements and welfare documents without AI hallucination.",
+                    "Maintaining high system availability and fast inference speeds even when primary AI model providers experience rate limits or downtime."
                 ],
                 th: [
-                    "การจัดการข้อความที่ไม่มีโครงสร้างปริมาณมหาศาลอย่างมีประสิทธิภาพ",
-                    "การรักษาความเป็นส่วนตัวของข้อมูลและการปฏิบัติตามกฎหมาย PDPA ของไทย",
-                    "การปรับปรุงความเร็วในการตอบสนองของ AI ภายใต้ข้อจำกัดด้านเครือข่ายอินเทอร์เน็ตในพื้นที่ชนบท"
+                    "หน่วยงานท้องถิ่นประสบปัญหาความล่าช้าในการให้บริการข้อมูลแก่ประชาชน เนื่องจากช่องทางการสื่อสารแบบเดิมมีข้อจำกัดด้านเวลาและการเข้าถึง",
+                    "การควบคุมให้ AI ตอบคำถามได้อย่างแม่นยำตามบริบทข้อมูลพื้นฐาน ข่าวสาร และสวัสดิการของหมู่บ้านโดยไม่สร้างข้อมูลเท็จ (Hallucination)",
+                    "การรักษาความเสถียรและความเร็วในการตอบกลับของผู้ใช้งาน แม้ในกรณีที่ผู้ให้บริการโมเดลภาษาหลักเกิดข้อจำกัดด้านการใช้งาน"
                 ]
             },
             solutions: {
                 en: [
-                    "Implemented a Hybrid RAG Pipeline using LangChain.js to fetch precise contextual data before querying the LLM.",
-                    "Developed a 'PDPA Shield' layer that automatically anonymizes PII (Personally Identifiable Information) before data hits the language models.",
-                    "Utilized Groq for ultra-fast inference and Gemini for complex reasoning tasks, balancing speed and accuracy."
+                    "Built a Full-stack management and RAG system using Next.js, HeroUI, Tailwind CSS, and PostgreSQL with pgvector (Supabase) managed via Prisma ORM.",
+                    "Engineered a Hybrid LLM orchestration strategy with LangChain.js, utilizing Groq as the ultra-fast primary engine and OpenRouter as an automated fallback system.",
+                    "Integrated a seamless Telegram Bot interface with NLP and vector similarity search so villagers can easily access public services and announcements."
                 ],
                 th: [
-                    "ติดตั้ง Hybrid RAG Pipeline โดยใช้ LangChain.js เพื่อดึงข้อมูลบริบทที่แม่นยำก่อนส่งคำขอไปยัง LLM",
-                    "พัฒนาชั้นกรอง 'PDPA Shield' ที่ปิดบังข้อมูลส่วนบุคคล (PII) อัตโนมัติก่อนที่ข้อมูลจะไปถึงโมเดลภาษา",
-                    "ใช้งาน Groq สำหรับการประมวลผลที่รวดเร็วเป็นพิเศษ และ Gemini สำหรับงานวิเคราะห์ที่ซับซ้อน เพื่อความสมดุลระหว่างความเร็วและความแม่นยำ"
+                    "พัฒนาระบบในรูปแบบ Full-stack ด้วย Next.js, HeroUI, Tailwind CSS และฐานข้อมูลเวกเตอร์ PostgreSQL/pgvector (Supabase) ผ่าน Prisma ORM",
+                    "ออกแบบกลยุทธ์ Hybrid LLM ควบคุมด้วย LangChain.js โดยใช้โมเดลจาก Groq เป็นแกนหลักเพื่อความรวดเร็วสูง และใช้ OpenRouter เป็นระบบสำรองอัตโนมัติ (Fallback)",
+                    "เชื่อมต่อระบบเข้ากับ Telegram Bot ร่วมกับกระบวนการค้นคืนข้อมูลด้วยเวกเตอร์ (RAG) เพื่อให้ประชาชนเข้าถึงข้อมูลได้ง่ายและทันที"
                 ]
             },
             outcomes: {
                 en: [
-                    "Reduced administrative workload for village leaders by 70%.",
-                    "Successfully deployed to production and actively serving local residents.",
-                    "Presented as an innovative solution in regional academic conferences."
+                    "Published in the Journal of Applied Science Innovation and Materials Technology (ISSN: 3088-3229), Vol. 1, No. 3 (May–June 2026), pp. 14–27 on TCI ThaiJO.",
+                    "System efficiency evaluated by 5 experts achieved the 'Highest' level (Mean = 4.79, S.D. = 0.41).",
+                    "User satisfaction evaluated by 32 citizens and staff members achieved a 'High' level (Mean = 4.42, S.D. = 0.87) and won the Excellent Oral Presentation Award at the 4th National Conference on Science and Technology."
                 ],
                 th: [
-                    "ลดภาระงานด้านเอกสารและการตอบคำถามของผู้นำหมู่บ้านลงถึง 70%",
-                    "นำขึ้นระบบจริง (Production) และให้บริการผู้คนในชุมชนอย่างต่อเนื่อง",
-                    "ได้รับเลือกให้นำเสนอในงานประชุมวิชาการระดับภูมิภาคในฐานะนวัตกรรมแก้ไขปัญหาชุมชน"
+                    "ได้รับการตีพิมพ์เผยแพร่ในวารสารวิชาการ Journal of Applied Science Innovation and Materials Technology (ISSN: 3088-3229) ปีที่ 1 ฉบับที่ 3 หน้า 14–27 บนฐานข้อมูล TCI ThaiJO",
+                    "ผลการประเมินประสิทธิภาพของระบบโดยผู้เชี่ยวชาญ 5 ท่าน อยู่ในระดับ 'มากที่สุด' (ค่าเฉลี่ย = 4.79, S.D. = 0.41)",
+                    "ผลการประเมินความพึงพอใจของผู้ใช้งาน (ประชาชนและเจ้าหน้าที่ 32 คน) อยู่ในระดับ 'มาก' (ค่าเฉลี่ย = 4.42, S.D. = 0.87) และได้รับรางวัลนำเสนอยอดเยี่ยม (Excellent Oral Presentation Award) ในงานประชุมวิชาการระดับชาติ ครั้งที่ 4"
                 ]
             }
         }

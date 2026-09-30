@@ -19,9 +19,9 @@ interface FooterCompProps {
             tailwind: string;
         };
         library: {
-            api: string;
-            "next-core": string;
-            database: string;
+            api?: string;
+            "next-core"?: string;
+            database?: string;
             utils: string;
         };
         date: { short: string; full: string };

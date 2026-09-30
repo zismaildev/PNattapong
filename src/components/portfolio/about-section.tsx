@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-
 import { Chip } from "@heroui/react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";

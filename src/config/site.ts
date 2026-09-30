@@ -34,28 +34,9 @@ export const siteConfig = {
             icon: "mdi:email-outline"
         },
     ],
-    navMenuItems: [
-        {
-            title: "About",
-            href: "/#about",
-        },
-        {
-            title: "Knowledge",
-            href: "/#knowledge",
-        },
-        {
-            title: "Projects",
-            href: "/#projects",
-        },
-        {
-            title: "Achievements",
-            href: "/#achievements",
-        },
-        {
-            title: "Contact",
-            href: "/#contact",
-        },
-    ],
+    get navMenuItems() {
+        return this.navItems.map(({ title, href }) => ({ title, href }));
+    },
     links: {
         facebook: "https://facebook.com",
         instagram: "https://www.instagram.com/xz1smail/?hl=th",

@@ -101,6 +101,7 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
     const pulsePhaseRef = useRef(0);
     const canvasSizeRef = useRef({ w: 0, h: 0 });
     const initializedRef = useRef(false);
+    const isVisibleRef = useRef(true);
 
     // ─── Initialize nodes with positions relative to (0,0) ───
     useEffect(() => {
@@ -281,14 +282,23 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
         };
     }, [width, height]);
 
-    // ─── Main animation loop ───
+    // ─── Main animation loop (with IntersectionObserver & Visibility pause) ───
     useEffect(() => {
         const canvas = canvasRef.current;
-        if (!canvas) return;
+        const container = containerRef.current;
+        if (!canvas || !container) return;
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
+        let isRunning = false;
+
         const render = () => {
+            if (!isVisibleRef.current || document.hidden) {
+                isRunning = false;
+                return;
+            }
+            isRunning = true;
+
             const { w, h } = canvasSizeRef.current;
             ctx.clearRect(0, 0, w, h);
             pulsePhaseRef.current += 0.03;
@@ -390,7 +400,7 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
                 ctx.beginPath();
                 ctx.moveTo(p1.x, p1.y);
                 ctx.lineTo(p2.x, p2.y);
-                ctx.globalAlpha = 1; // Full opacity for lines
+                ctx.globalAlpha = opacity;
                 ctx.strokeStyle = edge.target.color; // Raw color
                 ctx.lineWidth = 0.8;
                 ctx.stroke();
@@ -508,8 +518,38 @@ export function KnowledgeGraph({ className = "", width, height, isDark = true }:
             requestRef.current = requestAnimationFrame(render);
         };
 
-        requestRef.current = requestAnimationFrame(render);
-        return () => cancelAnimationFrame(requestRef.current);
+        const startLoop = () => {
+            if (!isRunning && isVisibleRef.current && !document.hidden) {
+                isRunning = true;
+                requestRef.current = requestAnimationFrame(render);
+            }
+        };
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisibleRef.current = entry.isIntersecting;
+                if (entry.isIntersecting) {
+                    startLoop();
+                }
+            },
+            { threshold: 0.05 }
+        );
+        observer.observe(container);
+
+        const handleVisibilityChange = () => {
+            if (!document.hidden && isVisibleRef.current) {
+                startLoop();
+            }
+        };
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
+        startLoop();
+
+        return () => {
+            cancelAnimationFrame(requestRef.current);
+            observer.disconnect();
+            document.removeEventListener("visibilitychange", handleVisibilityChange);
+        };
     }, [isDark]);
 
     return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { achievementsData, AchievementCategory, Achievement } from "@/data/achievements";
+import { achievementsData, AchievementCategory } from "@/data/achievements";
 import { Icon } from "@iconify/react";
 import { useIsDark } from "@/hooks/use-is-dark";
 import Image from "next/image";
@@ -110,10 +110,10 @@ export const AchievementsSection = () => {
                                 </div>
                                 <Image 
                                     src={achievement.image} 
-                                    alt={typeof achievement.title === 'string' ? achievement.title : achievement.title[locale]}
+                                    alt={achievement.title[locale]}
                                     fill
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                    className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                                    className={`object-cover ${achievement.imagePosition || "object-center"} transform group-hover:scale-105 transition-transform duration-500`}
                                 />
                             </div>
 
@@ -129,25 +129,38 @@ export const AchievementsSection = () => {
                                 </div>
                                 
                                 <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-2 line-clamp-2">
-                                    {typeof achievement.title === 'string' ? achievement.title : achievement.title[locale]}
+                                    {achievement.title[locale]}
                                 </h3>
                                 
                                 <div className="flex items-center gap-2 mb-4 text-sm text-slate-600 dark:text-slate-400">
                                     <Icon icon="mdi:bank-outline" className="text-slate-400 shrink-0" />
-                                    <span className="truncate">{typeof achievement.issuer === 'string' ? achievement.issuer : achievement.issuer[locale]}</span>
+                                    <span className="truncate">{achievement.issuer[locale]}</span>
                                 </div>
 
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 line-clamp-3">
-                                    {typeof achievement.description === 'string' ? achievement.description : achievement.description[locale]}
+                                    {achievement.description[locale]}
                                 </p>
 
-                                {/* Tags */}
-                                <div className="mt-auto pt-4 border-t border-slate-100 dark:border-white/5 flex flex-wrap gap-2">
-                                    {achievement.tags.map((tag) => (
-                                        <span key={tag} className="text-[10px] font-mono bg-slate-100 text-slate-500 dark:bg-white/5 dark:text-slate-400 px-2 py-1 rounded">
-                                            #{tag}
-                                        </span>
-                                    ))}
+                                {/* Tags & External Link */}
+                                <div className="mt-auto pt-4 border-t border-slate-100 dark:border-white/5 flex items-center justify-between gap-2">
+                                    <div className="flex flex-wrap gap-1.5">
+                                        {achievement.tags.map((tag) => (
+                                            <span key={tag} className="text-[10px] font-mono bg-slate-100 text-slate-500 dark:bg-white/5 dark:text-slate-400 px-2 py-1 rounded">
+                                                #{tag}
+                                            </span>
+                                        ))}
+                                    </div>
+                                    {achievement.link && (
+                                        <a
+                                            href={achievement.link}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            aria-label="View external publication or reference"
+                                            className="shrink-0 inline-flex items-center justify-center w-8 h-8 rounded-full bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/20 transition-colors"
+                                        >
+                                            <Icon icon="lucide:external-link" className="w-3.5 h-3.5" />
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         </div>

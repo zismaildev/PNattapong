@@ -1,7 +1,5 @@
-export type LocaleString = {
-    en: string;
-    th: string;
-};
+import type { LocaleString } from "@/types/locale";
+export type { LocaleString };
 
 export type LeadershipRole = {
     title: LocaleString;
