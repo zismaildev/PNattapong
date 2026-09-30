@@ -8,6 +8,7 @@ import {
 import { siteConfig } from "@/config/site";
 import { Icon } from "@iconify/react";
 import { useI18n } from "@/context/i18n-context";
+import packageJson from "../../package.json";
 
 interface FooterCompProps {
     appVersion?: {
@@ -39,12 +40,12 @@ export default function FooterComp({
     const { t } = useI18n();
 
     const appVersion = providedAppVersion || {
-        project: "0.1.0",
+        project: packageJson.version,
         client: {
-            version: "0.1.0",
-            nextjs: "16.2.4",
-            heroui: "3.0.3",
-            tailwind: "4.x",
+            version: packageJson.version,
+            nextjs: packageJson.dependencies?.next?.replace(/[\^~]/g, '') || "16.x",
+            heroui: packageJson.dependencies?.["@heroui/react"]?.replace(/[\^~]/g, '') || "3.x",
+            tailwind: "4.x", // Tailwind v4 is built into Next.js/HeroUI setup, or we can leave it hardcoded if not in deps
         },
         library: {
             utils: "1.0.0",

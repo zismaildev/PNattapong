@@ -1,11 +1,11 @@
-# PNattapong - Personal Portfolio 🚀
+# PNattapong - Personal Portfolio 🚀 (v1.1.0)
 
 เว็บไซต์ Portfolio ส่วนตัวของ **ณัฐพงษ์ ปันธิยะ (Nattapong Panthiya / ZismailDev)** พัฒนาขึ้นด้วยเทคโนโลยีเว็บสมัยใหม่ เพื่อนำเสนอข้อมูลประวัติการศึกษา ประสบการณ์ทำงาน ความสามารถ (Knowledge) ผลงาน (Projects) และเกียรติบัตร (Achievements) ต่างๆ
 
 ## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
-- **Framework:** Next.js 16 (App Router)
+- **Framework:** Next.js 16.3.3 (App Router)
 - **Language:** TypeScript
-- **Styling:** Tailwind CSS v4 & HeroUI
+- **Styling:** Tailwind CSS v4 & HeroUI 3.2.4
 - **Icons:** Iconify
 - **Analytics:** Vercel Analytics & Speed Insights
 - **Theming:** `next-themes` สำหรับจัดการ Light/Dark Mode
