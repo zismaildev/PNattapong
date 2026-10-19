@@ -67,7 +67,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+import { getProjects, getAchievements } from "@/services/portfolio-api";
+
+export default async function Home() {
+  const [projects, achievements] = await Promise.all([
+    getProjects(),
+    getAchievements(),
+  ]);
+
   return (
     <div className="flex flex-col items-center">
       <HeroSection />
@@ -78,9 +85,9 @@ export default function Home() {
       <div className="section-divider" />
       <SkillsSection />
       <div className="section-divider" />
-      <ProjectsSection />
+      <ProjectsSection projects={projects} />
       <div className="section-divider" />
-      <AchievementsSection />
+      <AchievementsSection achievements={achievements} />
       <div className="section-divider" />
       <LeadershipSection />
       <div className="section-divider" />

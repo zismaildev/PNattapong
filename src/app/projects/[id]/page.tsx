@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { projectsData } from "@/data/projects";
+import { getProjects, getProjectBySlug } from "@/services/portfolio-api";
 import { ProjectClientWrapper } from "@/components/portfolio/project-client-wrapper";
 
 export async function generateStaticParams() {
-    return projectsData.map((project) => ({
+    const projects = await getProjects();
+    return projects.map((project) => ({
         id: project.id,
     }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const { id } = await params;
-    const project = projectsData.find((p) => p.id === id);
+    const project = await getProjectBySlug(id);
     if (!project) return {};
 
     return {
@@ -23,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             type: "website",
             images: [
                 {
-                    url: "/og-image.png",
+                    url: project.coverImage || "/og-image.png",
                 }
             ]
         }
@@ -33,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
 
-    const project = projectsData.find((p) => p.id === id);
+    const project = await getProjectBySlug(id);
 
     if (!project) {
         notFound();

@@ -11,8 +11,9 @@ import FooterComp from "@/components/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { I18nProvider } from "@/context/i18n-context";
-import { achievementsData } from "@/data/achievements";
-import { projectsData } from "@/data/projects";
+import { getAchievements, getProjects } from "@/services/portfolio-api";
+import type { Achievement } from "@/data/achievements";
+import type { Project } from "@/data/projects";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,8 +40,8 @@ export const metadata: Metadata = {
   },
 };
 
-
-const jsonLd = {
+function generateJsonLd(projects: Project[], achievements: Achievement[]) {
+  return {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Nattapong Panthiya",
@@ -84,7 +85,7 @@ const jsonLd = {
       "https://facebook.com/nattapong130247",
       "https://www.instagram.com/xz1smail/?hl=th"
     ],
-    "hasCredential": achievementsData.map(ach => ({
+    "hasCredential": achievements.map(ach => ({
       "@type": "EducationalOccupationalCredential",
       "name": ach.title.en,
       "credentialCategory": ach.category,
@@ -122,7 +123,7 @@ const jsonLd = {
         "url": "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339",
         "sameAs": "https://ph05.tci-thaijo.org/index.php/JASMT/article/view/339/266"
       },
-      ...projectsData.map(proj => ({
+      ...projects.map(proj => ({
         "@type": "CreativeWork",
         "name": proj.title.en,
         "description": proj.shortDescription.en,
@@ -131,12 +132,18 @@ const jsonLd = {
       }))
     ]
   };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [projects, achievements] = await Promise.all([
+    getProjects(),
+    getAchievements(),
+  ]);
+  const jsonLd = generateJsonLd(projects, achievements);
   return (
     <html
       lang="th"

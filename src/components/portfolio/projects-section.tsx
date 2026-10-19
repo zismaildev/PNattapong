@@ -7,10 +7,14 @@ import { useInView } from "@/hooks/use-in-view";
 import { useIsDark } from "@/hooks/use-is-dark";
 
 import NextLink from "next/link";
-import { projectsData } from "@/data/projects";
+import { projectsData, Project } from "@/data/projects";
 import { useI18n } from "@/context/i18n-context";
 
-export const ProjectsSection = () => {
+interface ProjectsSectionProps {
+    projects?: Project[];
+}
+
+export const ProjectsSection = ({ projects = projectsData }: ProjectsSectionProps) => {
     const { isDark } = useIsDark();
     const { ref: sectionRef, isInView } = useInView({ threshold: 0.1, triggerOnce: true });
     const { t, locale } = useI18n();
@@ -42,7 +46,7 @@ export const ProjectsSection = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-                    {projectsData.map((project, index) => (
+                    {projects.map((project, index) => (
                         <div
                             key={project.id}
                             className={`group relative flex flex-col p-8 md:p-10 rounded-[32px] border transition-all duration-500 overflow-hidden ${isInView ? "animate-in fade-in slide-in-from-bottom-12 duration-700 fill-mode-both" : "opacity-0"} ${isDark ? "bg-white/[0.02] border-white/[0.05] hover:bg-white/[0.04] hover:border-white/10 hover:shadow-[0_0_40px_rgba(59,130,246,0.1)]" : "bg-white/80 border-slate-200 hover:shadow-xl backdrop-blur-md"}`}

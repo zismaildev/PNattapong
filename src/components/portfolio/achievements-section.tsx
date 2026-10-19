@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { achievementsData, AchievementCategory } from "@/data/achievements";
+import { achievementsData, Achievement, AchievementCategory } from "@/data/achievements";
 import { Icon } from "@iconify/react";
 import { useIsDark } from "@/hooks/use-is-dark";
 import Image from "next/image";
@@ -19,7 +19,11 @@ const categories: { label: string; value: AchievementCategory | "all" | "feature
     { label: "Work", value: "work" },
 ];
 
-export const AchievementsSection = () => {
+interface AchievementsSectionProps {
+    achievements?: Achievement[];
+}
+
+export const AchievementsSection = ({ achievements = achievementsData }: AchievementsSectionProps) => {
     const { mounted } = useIsDark();
     const [activeTab, setActiveTab] = useState<AchievementCategory | "all" | "featured">("all");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -32,7 +36,7 @@ export const AchievementsSection = () => {
         return <section id="achievements" className="w-full py-20 opacity-0"></section>;
     }
 
-    const filteredAchievements = achievementsData
+    const filteredAchievements = achievements
         .filter((achievement) => {
             if (activeTab === "all") return true;
             if (activeTab === "featured") return achievement.featured;
