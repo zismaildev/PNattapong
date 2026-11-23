@@ -44,9 +44,17 @@ function generateJsonLd(projects: Project[], achievements: Achievement[]) {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": `${siteConfig.url}/#person`,
     "name": "Nattapong Panthiya",
-    "alternateName": ["ณัฐพงษ์ ปันธิยะ", "ZismailDev", "Zismail"],
+    "alternateName": [
+      "ณัฐพงษ์ ปันธิยะ",
+      "Nattapong panthiya",
+      "ZismailDev",
+      "zismaildev",
+      "PNattapong"
+    ],
     "url": siteConfig.url,
+    "mainEntityOfPage": siteConfig.url,
     "image": `${siteConfig.url}/profile.jpg`,
     "jobTitle": "Full-Stack Developer",
     "gender": "Male",
@@ -79,11 +87,11 @@ function generateJsonLd(projects: Project[], achievements: Achievement[]) {
       "IoT"
     ],
     "sameAs": [
-      "https://github.com/ZismailDev",
-      "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
-      "https://fastwork.co/user/zismail",
-      "https://facebook.com/nattapong130247",
-      "https://www.instagram.com/xz1smail/?hl=th"
+      siteConfig.links.github,
+      siteConfig.links.linkedin,
+      siteConfig.links.fastwork,
+      siteConfig.links.facebook,
+      siteConfig.links.instagram
     ],
     "hasCredential": achievements.map(ach => ({
       "@type": "EducationalOccupationalCredential",

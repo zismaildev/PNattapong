@@ -29,7 +29,7 @@ export const en = {
     "About.languages": "LANGUAGES",
     "About.interests": "INTERESTS",
     "About.currently": "CURRENTLY",
-    "About.full_name_val": "Nattapong Panthiya",
+    "About.full_name_val": "Nattapong Panthiya (ณัฐพงษ์ ปันธิยะ)",
     "About.education_val": "B.Sc. Computer Science",
     "About.university_val": "Rajabhat Chiang Mai University",
     "About.year_val": "Year 3 → Year 4 (June 2026)",

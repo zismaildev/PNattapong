@@ -32,7 +32,7 @@ export const AboutSection = () => {
 
     const detailedInfo = [
         { label: t("About.full_name"), value: t("About.full_name_val") },
-        { label: t("About.brand"), value: "zismaildev" },
+        { label: t("About.brand"), value: "PNattapong · ZismailDev · zismaildev" },
         { label: t("About.education"), value: t("About.education_val") },
         { label: t("About.university"), value: t("About.university_val") },
         { label: t("About.year"), value: t("About.year_val") },

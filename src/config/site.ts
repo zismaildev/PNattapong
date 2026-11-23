@@ -38,10 +38,11 @@ export const siteConfig = {
         return this.navItems.map(({ title, href }) => ({ title, href }));
     },
     links: {
-        facebook: "https://facebook.com",
+        facebook: "https://facebook.com/nattapong130247",
         instagram: "https://www.instagram.com/xz1smail/?hl=th",
         github: "https://github.com/ZismailDev",
         linkedin: "https://www.linkedin.com/in/nattapong-panthiya-29a3a3330/",
+        fastwork: "https://fastwork.co/user/zismail",
         email: "nattapong130247@gmail.com",
     },
     googleAnalyticsId: "G-6NK28QG827",

@@ -29,7 +29,7 @@ export const th = {
     "About.languages": "ภาษา",
     "About.interests": "ความสนใจ",
     "About.currently": "กำลังทำ",
-    "About.full_name_val": "ณัฐพงษ์ ปันธิยะ",
+    "About.full_name_val": "ณัฐพงษ์ ปันธิยะ (Nattapong Panthiya)",
     "About.education_val": "วิทยาศาสตรบัณฑิต (วท.บ.) วิทยาการคอมพิวเตอร์",
     "About.university_val": "มหาวิทยาลัยราชภัฏเชียงใหม่",
     "About.year_val": "ปี 4",
